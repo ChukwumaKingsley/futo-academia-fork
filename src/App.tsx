@@ -7,7 +7,7 @@ function App() {
 			<Heading>Futo</Heading>
 			<Heading>Academia</Heading>
 
-			<Text>An Open Source Website For FUTO students with Over 10,000 Courses, Professional degrees and Certificates</Text>
+			<Text>An Open Source assessment platfrom, leveraging machine learning and natural language processing technologies to provide fast assessment and grading solutions for academic institutions.</Text>
 
 			<Flex>
 				<Button>Log In</Button>
