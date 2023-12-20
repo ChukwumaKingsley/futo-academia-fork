@@ -86,12 +86,6 @@ export const AssessmentResults = () => {
 		},
 	];
 
-    const colorScale = {
-        0: 'red',
-        50: 'orange',
-        100: 'green',
-      };
-
     if (isLoading) {
         return (
             <CourseTabs>
