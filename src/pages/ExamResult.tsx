@@ -7,15 +7,18 @@ import AdminLayout from "../layout/AdminLayout";
 import ObjectiveAnswer from "../components/ObjectiveAnswer";
 import Loader from "../components/Loaders";
 import { useUser } from "../hooks/useUser";
+import { useEffect } from "react";
 
 export default function ExamResult() {
 	const user = useUser()
 	const navigate = useNavigate()
 	const { id, idx } = useParams();
 
-	if (user.is_instructor) {
-        navigate(`courses/${idx}/assessment/result/${id}`)
-    }
+	useEffect(() => {
+        if (user && user?.is_instructor) {
+            navigate(`/courses/${idx}/assessment/result/${id}`)
+        }
+    }, [user])
 
 	const { data, isLoading } = useQuery({
 		queryKey: ["getRes", id],

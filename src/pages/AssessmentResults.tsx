@@ -15,15 +15,21 @@ export const AssessmentResults = () => {
     const [results, setResults] = useState<any>(null)
     const user = useUser() 
     const navigate = useNavigate()
+    
 
-    if (!user.is_instructor) {
-        navigate(`courses/assessment/${idx}/${id}/results`)
-    }
+    
+    useEffect(() => {
+        if (user && !user?.is_instructor) {
+            navigate(`/courses/assessment/${idx}/${id}/results`)
+        }
+    }, [user])
+    
 
     const { data: assessmentResultsStats } = useQuery({
 		queryKey: ["assessmentResultsStats", idx],
 		queryFn: () => http.get(`/assessments/stats/${idx}`, ).then((r) => r.data),
 	});
+    console.log(assessmentResultsStats)
 
     const { isLoading, refetch } = useQuery({
 		queryKey: ["getStudentRestulss", idx],
@@ -94,26 +100,48 @@ export const AssessmentResults = () => {
         )
     }
 
+    function getColor(value: any) {
+        if (value <= 50) {
+            return `rgba(255, ${Math.ceil((value/50)*255)}, 0)`
+        } else {
+            return `rgba(${Math.ceil((1-(value-50)/50)*256)}, ${Math.ceil((1-(value-50)/50)*128 + 128)}, 0)`
+        }
+    }
+
   return (
     <CourseTabs>
         {user?.is_instructor &&
         <>
-            <Box>
-                {assessmentResultsStats?.avg_score}<br/>
-                {assessmentResultsStats?.avg_score_percentage}<br/>
-                {assessmentResultsStats?.avg_time}<br/>
-                {assessmentResultsStats?.highest_score}<br/>
-                {assessmentResultsStats?.lowest_score}<br/>
-                {assessmentResultsStats?.num_students}<br/>
-                {assessmentResultsStats?.num_students_percentage}<br/>
-
-            </Box>
-            <Flex>
-                <Flex columnGap={3}>
-                    <Text>Average Score (%):</Text>
-                    <Text textAlign={"center"} fontSize={"2xl"} fontWeight={"bold"} textColor={"blue"}> {assessmentResultsStats?.avg_score} ({assessmentResultsStats?.avg_score_percentage})</Text>
+            <Flex bgColor={"brand.500"}flexDir={"column"} mx={5} borderRadius={"50px"} p={3} my={10}>
+                <Flex  width={"100%"} justifyContent={"space-around"} alignContent={"center"} flexWrap={"wrap"} rowGap={5} columnGap={10} flexDir={"column"}>
+                    <Flex columnGap={3} p={1} fontSize={"2xl"} fontWeight={"bold"}>
+                        <Text textColor={"white"}>Average Test Time:</Text>
+                        <Text textAlign={"center"} textColor={"white"}> {assessmentResultsStats?.avg_time} minutes</Text>
+                    </Flex>
+                    <Flex columnGap={3} p={1} fontSize={"2xl"} fontWeight={"bold"}>
+                        <Text textColor={"white"}>Average Score (%):</Text>
+                        <Text textAlign={"center"} textColor={getColor(assessmentResultsStats?.avg_score_percentage)}> {assessmentResultsStats?.avg_score}/{assessmentResultsStats?.total_possible_score} ({assessmentResultsStats?.avg_score_percentage}%)</Text>
+                    </Flex>
+                    
+                </Flex>
+                <Flex width={"100%"} justifyContent={"space-around"} flexWrap={"wrap"} rowGap={5} columnGap={10}>
+                    <Flex flexDir={"column"}>
+                        <Flex columnGap={3} p={1} fontSize={"2xl"} fontWeight={"bold"}>
+                            <Text textColor={"white"}>Highest Score:</Text>
+                            <Text textAlign={"center"} textColor={getColor(assessmentResultsStats?.highest_score / assessmentResultsStats?.total_possible_score * 100)}> {assessmentResultsStats?.highest_score}/{assessmentResultsStats?.total_possible_score}</Text>
+                        </Flex>
+                        <Flex columnGap={3} p={1} fontSize={"2xl"} fontWeight={"bold"}>
+                            <Text textColor={"white"}>Lowest Score:</Text>
+                            <Text textAlign={"center"} textColor={getColor(assessmentResultsStats?.lowest_score / assessmentResultsStats?.total_possible_score * 100)}> {assessmentResultsStats?.lowest_score}/{assessmentResultsStats?.total_possible_score}</Text>
+                        </Flex>
+                    </Flex>
+                    <Flex columnGap={3} p={1} fontSize={"2xl"} fontWeight={"bold"} alignItems={"center"}>
+                            <Text textColor={"white"}>No. of students:</Text>
+                            <Text textAlign={"center"} textColor={getColor(assessmentResultsStats?.percentage_submissions)}> {assessmentResultsStats?.num_students} ({assessmentResultsStats?.percentage_submissions}%)</Text>
+                        </Flex>
                 </Flex>
             </Flex>
+
 
             <Container width={"100%"} display={"flex"} columnGap={2}>
                 <Input bgColor={"white"} placeholder="search by student name or registration number" name="search" value={search} onChange={handleSearch} />
