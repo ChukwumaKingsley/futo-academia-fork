@@ -40,7 +40,17 @@ export default function ViewCourse() {
 			params: {
 			is_marked: true,
 			},
-		  }).then((r) => r.data),
+		  },).then((r) => r.data),
+		  enabled: !user.isLoading && user.is_instructor,
+	});
+
+	const { data: myResults } = useQuery({
+		queryKey: ["my results", id],
+		queryFn: () => http.get(`/courses/results/${id}/${user?.id}`,).then((r) => r.data),
+		onSuccess(data) {
+			console.log(data)
+		},
+		enabled: !user.isLoading && !user.is_instructor
 	});
 
 	const onOpen = (index: number) => {
@@ -130,6 +140,34 @@ export default function ViewCourse() {
 			key: "students",
 			align: "right",
 		},
+	];
+
+	const header2 = [
+		{
+			title: "S/N",
+			key: "s/n",
+			align: "left",
+		},
+		{
+			title: "Title",
+			key: "title",
+			align: "left",
+		},
+		{
+			title: "Type",
+			key: "type",
+			align: "left",
+		},
+		{
+			title: "Score (%)",
+			key: "score",
+			align: "right",
+		},
+		{
+			title: "Time (minutes)",
+			key: "average score",
+			align: "right",
+		}
 	];
 
 	const renderer1 = ({ days, hours, minutes, seconds, completed }: any) => {
@@ -289,15 +327,15 @@ export default function ViewCourse() {
 
 					</Flex>
 				</Box>
+
 				{user?.is_instructor && (
 					<>
-						<Flex alignItems="center" justifyContent={"space-between"} columnGap={5} my={8}>
-							<Text fontSize="24px" fontWeight="bold" >
-								Results
-							</Text>
-							
+						<Flex alignItems="center" justifyContent={"space-between"} columnGap={5} mt={8}>
+						<Text fontSize="24px" color="#585AD4" fontWeight="bold" mt={5}>
+							Results
+						</Text>
 					</Flex>
-					<TableContainer mx="auto" mt={6}>
+					<TableContainer mx="auto" mt={0}>
 						<Table variant="striped">
 							<Thead bgColor="brand.800" textColor="white">
 								<Tr>
@@ -318,7 +356,7 @@ export default function ViewCourse() {
 								{courseResultsStats?.length > 0 ? courseResultsStats?.map((assessment: any, index: number) => 
 								<Tr key={index} 
 									cursor={"pointer"}
-									_hover={{ transform: "scale(1.01)", transition: "transform 0.2s ease-in-out" }}
+									_hover={{ transform: "scale(0.995)", transition: "transform 0.2s ease-in-out" }}
 									onClick={() => navigate(`/courses/${id}/assessment/result/${assessment?.id}`)}
 								>
 									<Td>{index+1}</Td>
@@ -330,25 +368,68 @@ export default function ViewCourse() {
 									<Td textAlign={"right"}>{assessment?.highest_score}</Td>
 									<Td textAlign={"right"}>{assessment?.avg_time}</Td>
 								</Tr>):
-								<Text>No results here</Text>}
+								<Tr>
+									<Td colSpan={8} textAlign={"center"}>
+										<Text alignSelf={"center"} textColor={"#696CFF"}>
+											No assessment results
+										</Text>
+									</Td>
+								</Tr>}
+								
 							</Tbody>
 						</Table>
 					</TableContainer>
 					</>
 				)}
+
 				{!user?.is_instructor && (
-					<Flex flexDir={"column"}>
+					<>
+					<Flex alignItems="center" justifyContent={"space-between"} columnGap={5} mt={8}>
 						<Text fontSize="24px" color="#585AD4" fontWeight="bold" mt={5}>
 							Results
 						</Text>
-						<Flex flexDir={"column"} bg={"gray.200"} p={5}>
-							<Text alignSelf={"center"} textColor={"#696CFF"}>
-								No assessment result
-							</Text>
-						</Flex>
-
-
 					</Flex>
+					<TableContainer mx="auto" mt={0}>
+						<Table variant="striped">
+							<Thead bgColor="brand.800" textColor="white">
+								<Tr>
+									{header2.map((header: any) => (
+										<Th
+											key={header?.title}
+											sx={{
+												color: "#fff",
+												textAlign: header?.align,
+											}}
+										>
+											{header.title}
+										</Th>
+									))}
+								</Tr>
+							</Thead>
+							<Tbody>
+								{myResults?.length > 0 ? myResults?.map((assessment: any, index: number) => 
+								<Tr key={index} 
+									cursor={"pointer"}
+									_hover={{ transform: "scale(0.995)", transition: "transform 0.2s ease-in-out" }}
+									onClick={() => navigate(`/courses/assessment/${assessment?.id}/${id}/results`)}
+								>
+									<Td>{index+1}</Td>
+									<Td maxW={"200px"} overflowX={"hidden"}>{assessment?.title}</Td>
+									<Td>{assessment?.type}</Td>
+									<Td textAlign={"right"}>{assessment?.total_score} ({assessment?.total_percentage}%)</Td>
+									<Td textAlign={"right"}>{assessment?.duration}</Td>
+								</Tr>):
+								<Tr>
+								<Td colSpan={8} textAlign={"center"}>
+									<Text alignSelf={"center"} textColor={"#696CFF"}>
+										No assessment results
+									</Text>
+								</Td>
+							</Tr>}
+							</Tbody>
+						</Table>
+					</TableContainer>
+					</>
 				)}
 			</CourseTabs>
 		</>
