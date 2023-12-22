@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import http from "../utils/http";
-import { Button, Center, Flex, Grid, Input, InputGroup, InputLeftAddon, Select, Text } from "@chakra-ui/react";
+import { Avatar, Button, Center, Flex, Grid, Input, InputGroup, InputLeftAddon, Select, Text } from "@chakra-ui/react";
 import Loader from "../components/Loaders";
 import { SearchIcon } from "@chakra-ui/icons";
 import { useEffect, useState } from "react";
@@ -83,8 +83,9 @@ function Enrolled({id}: any) {
           Remove all
         </Button>
       </Flex>
-      <Grid templateColumns={"0.8fr 3fr 2fr 1fr 1fr 0.8fr"} border={"none"} fontSize={{base: "xs", md: "md"}} columnGap={1} bgColor={"#343680"}>
+      <Grid templateColumns={"0.5fr 0.5fr 3fr 2fr 1fr 1fr 0.8fr"} border={"none"} fontSize={{base: "xs", md: "md"}} columnGap={1} bgColor={"#343680"}>
         <Text textColor={"white"} border={"none"} py={3} pl={1}>S/N</Text>
+        <Text textColor={"white"} border={"none"} py={3} pl={1}></Text>
         <Text textColor={"white"} border={"none"} py={3}>Name</Text>
         <Text textColor={"white"} border={"none"} py={3}>Reg. No.</Text>
         <Text textColor={"white"} border={"none"} py={3}>Dept</Text>
@@ -92,8 +93,9 @@ function Enrolled({id}: any) {
         <Text border={"none"}></Text>
       </Grid>
       {data?.map((student: any, index: number) => 
-        <Grid templateColumns={"0.8fr 3fr 2fr 1fr 1fr 0.8fr"} border={"none"} fontSize={{base: "xs", md: "md"}} key={student?.reg_num} minH={"40px"} bg={index%2 === 0 ? "#E0E0E066" : "unset"} alignContent={"center"}>
+        <Grid templateColumns={"0.5fr 0.5fr 3fr 2fr 1fr 1fr 0.8fr"} border={"none"} fontSize={{base: "xs", md: "md"}} key={student?.reg_num} minH={"40px"} bg={index%2 === 0 ? "#E0E0E066" : "unset"} alignItems={"center"} justifyContent={"center"} p={{base: 1, md: 3}}>
           <Text py={3} pl={1}>{index+1}</Text>
+          <Flex><Avatar src={student?.photo_url} name={student?.name} size={{base: "sm", md: "md"}} /></Flex>
           <Text py={3}>{student?.name}</Text>
           <Text py={3} overflowX={"auto"}>{student?.reg_num}</Text>
           <Text py={3} overflowX={"auto"}>{student?.department}</Text>

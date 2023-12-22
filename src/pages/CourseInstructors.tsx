@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import CourseTabs from "../layout/CourseTabs";
 import { useQuery } from "@tanstack/react-query";
 import http from "../utils/http";
-import { Flex, Heading, Spacer, Text } from "@chakra-ui/react";
+import { Avatar, Flex, Heading, Spacer, Text } from "@chakra-ui/react";
 import Loader from "../components/Loaders";
 import { useState } from "react";
 import { useAcceptInstructorRequest, useDeleteInstructorRequest } from "../hooks/useEnrollments";
@@ -80,6 +80,7 @@ export default function CourseInstructors() {
 				<Flex flexDir={"column"}>
 					{coordinatorsList?.map((coordinator: any, index: number) => 
 					<Flex p={3} bg={index%2 === 0 ? "#E0E0E066" : "unset"} columnGap={1} key={index} alignItems={"center"}>
+						<Avatar src={coordinator?.photo_url} name={coordinator?.name} />
 						<Text>{coordinator?.title}</Text>
 						<Text>{coordinator?.name}</Text>
 						<Text>({coordinator?.department})</Text>
@@ -97,6 +98,7 @@ export default function CourseInstructors() {
 				<Flex flexDir={"column"}>
 					{instructorsList?.map((instructor: any, index: number) => 
 					<Flex p={3} bg={index%2 === 0 ? "#E0E0E066" : "unset"} columnGap={1} key={index} alignItems={"center"}>
+						<Avatar src={instructor?.photo_url} name={instructor?.name} />
 						<Text>{instructor?.title}</Text>
 						<Text>{instructor?.name}</Text>
 						<Text>({instructor?.department})</Text>
@@ -116,6 +118,7 @@ export default function CourseInstructors() {
 				<Flex flexDir={"column"}>
 					{requestsList?.map((instructor: any, index: number) => 
 					<Flex p={3} bg={index%2 === 0 ? "#E0E0E066" : "unset"} columnGap={1} key={index} alignItems={"center"}>
+						<Avatar src={instructor?.photo_url} name={instructor?.name} />
 						<Text>{instructor?.title}</Text>
 						<Text>{instructor?.name}</Text>
 						<Text>({instructor?.department})</Text>
