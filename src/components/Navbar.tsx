@@ -44,7 +44,7 @@ export default function Navbar({ bgColor }: NavbarProps) {
 				
 				<Flex display={{ base: "none", md: "flex" }} columnGap={2} alignItems={"center"}>
 					<Image src={Bell} boxSize="35px" />
-					<Avatar src={userData.photo_url} name={userData.name} as={NavLink} to={"/lecturer-profile"}/>
+					<Avatar src={userData.photo_url} name={userData.name} as={NavLink} to={user?.is_instructor ? "lecturer-profile" : "student-profile"}/>
 				</Flex>
 
 				<Flex alignItems={"center"} columnGap={2}>
@@ -65,7 +65,7 @@ export default function Navbar({ bgColor }: NavbarProps) {
 								<HamburgerIcon />
 							</MenuButton>
 							<MenuList>
-								<MenuItem justifyContent={"center"} borderBottomWidth={"1"} as={NavLink} to="/profile">
+								<MenuItem justifyContent={"center"} borderBottomWidth={"1"} as={NavLink} to={user?.is_instructor ? "lecturer-profile" : "student-profile"}>
 									Profile
 								</MenuItem>
 								<MenuItem justifyContent={"center"} >
