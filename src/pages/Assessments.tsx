@@ -4,17 +4,17 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { BiPencil } from "react-icons/bi";
 
 import CourseTabs from "../layout/CourseTabs";
-import CourseCard from "../components/CourseCard";
+import AssessmentCard from "../components/AssessmentCard";
 import { useNavigate } from "react-router-dom";
 
-export default function Examination() {
+export default function Assessments() {
 	const navigate = useNavigate();
 	return (
 		<>
 			<CourseTabs>
 				<Box my={5}>
 					<Input bgColor="#fff" placeholder="Search by Year" width="40%" />
-
+					
 					<Flex alignItems="center" mt={3}>
 						<Text fontSize="24px" color="#585AD4" fontWeight="bold">
 							Draft
@@ -44,8 +44,8 @@ export default function Examination() {
 				</Box>
 
 				<Box>
-					<CourseCard />
-					<CourseCard />
+					<AssessmentCard />
+					<AssessmentCard />
 					<Box display="flex" alignItems="center" justifyContent="flex-end">
 						<Text cursor="pointer">See all</Text>
 					</Box>
@@ -57,8 +57,8 @@ export default function Examination() {
 						</Text>
 						<Text>A copy automatically gets saved in drafts after one month. </Text>
 					</Box>
-					<CourseCard />
-					<CourseCard />
+					<AssessmentCard />
+					<AssessmentCard />
 					<Box display="flex" alignItems="center" justifyContent="flex-end">
 						<Text cursor="pointer">See all</Text>
 					</Box>

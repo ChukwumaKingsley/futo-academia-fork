@@ -2,11 +2,11 @@ import { AddIcon } from "@chakra-ui/icons";
 import { Box, Text } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
-const JoinCourse = () => {
+const JoinCourse = ({user}:{user: string}) => {
 	const navigate = useNavigate();
 
 	const handleJoinCourseClick = () => {
-		navigate("#");
+		navigate(`/${user}/home`);
 	};
 	return (
 		<Box 

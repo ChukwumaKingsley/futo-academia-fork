@@ -37,14 +37,8 @@ export default function StudentCourses() {
 
 						<Outlet />
  
-						<Flex maxWidth={"400px"} alignSelf={"center"} gap={'3'}>
-							<JoinCourse />
-						</Flex>
-
-						<Flex my={12} justifyContent={"center"}>
-							<Button width={{ base: "150px", md: "200px", lg: "400px" }} colorScheme={"brand"} variant={"outline"}>
-								View More
-							</Button>
+						<Flex maxWidth={"400px"} alignSelf={"center"} gap={'3'}mt={5}>
+							<JoinCourse user="student" />
 						</Flex>
 					</Container>
 				</Box>

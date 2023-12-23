@@ -40,7 +40,7 @@ export default function LecturerCourses() {
 						<Spacer />
 						<Flex maxWidth={"400px"} alignSelf={"center"} gap={'3'} mt={20}>
 							<AddCourse />
-							<JoinCourse />
+							<JoinCourse user="lecturer"/>
 						</Flex>
 					</Container>
 				</Box>

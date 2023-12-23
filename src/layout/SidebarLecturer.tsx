@@ -1,4 +1,4 @@
-import { Box, Flex, Link, List, ListItem, Stack, Text } from "@chakra-ui/react";
+import { Box, Flex, Link, List, ListItem, Stack, Text, useDisclosure } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import AutoStoriesOutlinedIcon from "@mui/icons-material/AutoStoriesOutlined";
@@ -7,22 +7,15 @@ import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 import { useUser } from "../hooks/useUser";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { LogoutAlert } from "../components/LogoutAlert";
 
 
 const SidebarLecturer = () => {
 	const user = useUser();
+	const { isOpen: alertIsOpen, onClose: alertOnClose, onOpen: alertOnOpen} = useDisclosure();
 
 	const [activeItem, setActiveItem] = useState("");
 	const location = useLocation();
-
-	//Logout Functionality
-	// const navigate = useNavigate();
-	const handleLogout = () => {
-		sessionStorage.clear();
-		localStorage.clear();
-
-		window.location.href = "/";
-	};
 
 	// update activeItem based on current location
 	useEffect(() => {
@@ -83,8 +76,9 @@ const SidebarLecturer = () => {
 
 			<Flex mt="20" padding={"10px"} cursor={"pointer"}>
 				<LogoutRoundedIcon sx={{ marginRight: "20px" }} />
-				<Text onClick={handleLogout}>Logout</Text>
+				<Text onClick={alertOnOpen}>Logout</Text>
 			</Flex>
+			<LogoutAlert alertIsOpen={alertIsOpen} alertOnClose={alertOnClose} />
 		</Box>
 	);
 };

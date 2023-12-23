@@ -1,13 +1,12 @@
 import { ReactNode, useEffect, useState } from "react";
 
-import AppTable from "../components/Table";
 import http from "../utils/http";
-import { Box, Text, Flex } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import AdminLayout from "../layout/AdminLayout";
-import TimerBox from "../components/TimerBox";
 import CourseHeader from "../components/CourseHeader";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { useUser } from "../hooks/useUser";
 
 interface IProps {
 	children: ReactNode;
@@ -15,21 +14,23 @@ interface IProps {
 
 export default function CourseTabs({ children }: IProps) {
 	const { id } = useParams();
+	const user = useUser()
 	const tabData = [
 		{
-			name: "Course Summary",
-			path: `/lecturer/courses/${id}`,
+			name: "Summary",
+			path: `/courses/${id}`,
 		},
 		{
 			name: "Assessments",
-			path: `/lecturer/courses/${id}/assignments`,
+			path: `/courses/${id}/assessments`,
 		},
 		{
-			name: "Tests",
+			name: "Instructors",
+			path: `/courses/${id}/instructors`,
 		},
 		{
-			name: "Examination",
-			path: `/lecturer/courses/${id}/examination`,
+			name: "Students",
+			path: `/courses/${id}/students`,
 		},
 	];
 
@@ -38,32 +39,46 @@ export default function CourseTabs({ children }: IProps) {
 	const { data } = useQuery({
 		queryKey: ["getCourseID", id],
 		queryFn: () => http.get(`/courses/${id}`).then((r) => r.data),
-		// onSuccess: (data: any) => console.log("Query per course Successful", data),
-		// onError: (err) => console.log("error", err),
+	});
+
+	const { data: student_count } = useQuery({
+		queryKey: ["getStudentCount", id],
+		queryFn: () => http.get(`/students/enrolled/${id}/count`).then((r) => r.data),
+	});
+
+	const { data: instructor_count} = useQuery({
+		queryKey: ["getInstructorCount", id],
+		queryFn: () => http.get(`/instructors/count/${id}`).then((r) => r.data),
+	});
+
+	const { data: enrolled, refetch: refetchEnrollmentStatus } = useQuery({
+		queryKey: ["getEnrollmentStatus", id],
+		queryFn: () => http.get(`/courses/${id}/enrollment_status`).then((r) => r.data),
 	});
 
 	const navigate = useNavigate();
 
-	const [active, setActive] = useState(0);
-
-	console.log(data)
+	const [active, setActive] = useState<number | null>(null);
 
 	useEffect(() => {
-		if (location.pathname.includes("examination")) {
+		if (location.pathname.includes("student")) {
 			setActive(3);
-		}
-		if (location.pathname.includes("assignments")) {
+		} else if (location.pathname.includes("assessment")) {
 			setActive(1);
+		} else if (location.pathname.includes("instructor")) {
+			setActive(2);
+		} else {
+			setActive(0)
 		}
 	}, []);
 
 	return (
 		<>
 			<AdminLayout>
-				<CourseHeader {...data} />
-				<Box>
+				<CourseHeader {...{ ...data, student_count, instructor_count, user, ...enrolled, refetchEnrollmentStatus }} />
+				{enrolled && (enrolled?.is_course_instructor || enrolled?.is_course_coordinator || enrolled?.is_enrolled) ? <Box>
 					<Box>
-						<Box display="flex" bgColor="#dae4ff" p={3} alignItems="center">
+						<Box display="flex" bgColor="#dae4ff" alignItems="center" flexWrap={"wrap"} justifyContent={"space-around"} h={"30px"}>
 							{tabData?.map((x, i) => (
 								<Box
 									onClick={() => {
@@ -71,14 +86,18 @@ export default function CourseTabs({ children }: IProps) {
 
 										navigate(x?.path ?? x?.name.toLowerCase());
 									}}
-									mr={4}
+									key={i}
+									w={"25%"}
+									h={"30px"}
 									cursor="pointer"
 									as={"button"}
+									textAlign={"center"}
 									sx={{
-										...(i === active && { color: "white", bg: "#343680", p: 2 }),
+										...(i === active && { color: "white", bg: "#343680"}),
 									}}
 									disabled={i === active}
 									_selected={{ color: "white", bg: "#343680" }}
+									fontSize={{base: "12px", sm: "18px"}}
 								>
 									{x?.name}
 								</Box>
@@ -87,31 +106,10 @@ export default function CourseTabs({ children }: IProps) {
 
 						{children}
 					</Box>
-				</Box>
-				{false && (
-					<>
-						<Box>
-							<Text fontSize="24px" color="#585AD4" fontWeight="bold">
-								Currently up
-							</Text>
-
-							<Flex alignItems="center">
-								<Box width="100px" height="100px" bgColor="red"></Box>
-								<Flex direction="column" ml={2} justifyContent="space-around" mr={3}>
-									<Box>Assignment</Box>
-									<Box>
-										<Text color="#3578D3" fontWeight="bold">
-											Jan 1 2023
-										</Text>
-									</Box>
-								</Flex>
-
-								<TimerBox />
-							</Flex>
-						</Box>
-						<AppTable></AppTable>
-					</>
-				)}
+				</Box> : user.is_instructor ?
+				<Text fontSize={"2xl"} textAlign={"center"} mt={"20%"} textColor={"#343680"}>YOU ARE NOT AN INSTRUCTOR FOR THIS COURSE</Text> :
+				<Text fontSize={"2xl"} textAlign={"center"} mt={"20%"} textColor={"#343680"}>YOU ARE NOT ENROLLED IN THIS COURSE</Text>
+				}
 			</AdminLayout>
 		</>
 	);

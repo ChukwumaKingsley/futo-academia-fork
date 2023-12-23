@@ -9,8 +9,6 @@ import UploadCourse from "./pages/lecturer/UploadCourse";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ViewCourse from "./pages/ViewCourse";
 import CourseHeader from "./components/CourseHeader";
-import Examination from "./pages/Examination";
-import AddExam from "./pages/AddExam";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -28,6 +26,15 @@ import LecturerHome from "./pages/lecturer/LecturerHome";
 import StudentProfile from "./layout/StudentProfile";
 import ProfileStudent from "./pages/Profile/ProfileStudent";
 import LecturerProfile from "./layout/LecturerProfile";
+import EditCourse from "./pages/lecturer/EditCourse";
+import ViewAssessment from "./pages/ViewAssessment";
+import Assessments from "./pages/Assessments";
+import AddAssessment from "./pages/AddAssessment";
+import ViewCourseStudent from "./pages/ViewCourseStudent";
+import CourseStudents from "./pages/CourseStudents";
+import CourseInstructors from "./pages/CourseInstructors";
+import { AssessmentResults } from "./pages/AssessmentResults";
+import { AssessmentResultsStudent } from "./pages/AssessmentResultStudent";
 
 const colors = {
 	brand: {
@@ -106,31 +113,42 @@ const router = createBrowserRouter(
 	createRoutesFromElements(
 		<Route path="/">
 			<Route index element={<Home />} />
-			<Route path="student/home/*" element={<StudentHome />} />
+
+			{/* lecturer routes */}
 			<Route path="lecturer/home/*" element={<LecturerHome />} />
 			<Route path="lecturer/my-courses" element={<LecturerCourses />}>
 				<Route index element={<FirstSemesterCourses />} />
 				<Route path="second-semester" element={<SecondSemesterCourses />} />
 			</Route>
+			<Route path="courses-upload" element={<UploadCourse />} />
+			<Route path="edit-course/:id" element={<EditCourse />} />
+			<Route path="courses/:id" element={<ViewCourse />} />
+			<Route path="courses/:id/assessment" element={<Assessments />} />
+			<Route path="courses/:id/assessment/add/:idx" element={<AddAssessment />} />
+			<Route path="courses/:id/assessment/:idx" element={<ViewAssessment />} />
+			<Route path="courses/:id/assessment/result/:idx" element={<AssessmentResults />} />
+			<Route path="courses/:id/assessment/result/:idx/:reg_num" element={<AssessmentResultsStudent />} />
+			<Route path="courses/:id/assessments" element={<Assignments />} />
+			<Route path="courses/:id/students/*" element={<CourseStudents />} />
+			<Route path="courses/:id/instructors/*" element={<CourseInstructors />} />
+			<Route path="lecturer-profile" element={<LecturerProfile />}>
+				<Route index element={<Profile />} />
+			  	<Route path="password" element={<Password />} />
+			</Route>
+
+			{/* Student routes */}
+			<Route path="student/home/*" element={<StudentHome />} />
+			<Route path="student/courses/:id" element={<ViewCourseStudent />} />
 			<Route path="student/my-courses" element={<StudentCourses />}>
 				<Route index element={<FirstSemesterCourses />} />
 				<Route path="second-semester" element={<SecondSemesterCourses />} />
 			</Route>
-			<Route path="lecturer/courses-upload" element={<UploadCourse />} />
-			<Route path="lecturer/courses/:id" element={<ViewCourse />} />
 			<Route path="course/header" element={<CourseHeader />} />
-			<Route path="lecturer/courses/:id/examination" element={<Examination />} />
-			<Route path="lecturer/courses/:id/examination/add/:idx" element={<AddExam />} />
-			<Route path="lecturer/courses/:id/assignments" element={<Assignments />} />
 			<Route path="exams/:id/:courseId" element={<TakeExam />} />
-			<Route path="exam/:id/:idx/results" element={<ExamResult />} />
+			<Route path="courses/assessment/:id/:idx/results" element={<ExamResult />} />
 			<Route path="course/header/obj" element={<ObjectiveAnswer />} />
 			<Route path="student-profile" element={<StudentProfile />}>
 				<Route index element={<ProfileStudent />} />
-			  	<Route path="password" element={<Password />} />
-			</Route>
-			<Route path="lecturer-profile" element={<LecturerProfile />}>
-				<Route index element={<Profile />} />
 			  	<Route path="password" element={<Password />} />
 			</Route>
 		</Route>

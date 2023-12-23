@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Container, Flex, Image, Menu, MenuButton, MenuItem, MenuList, Text } from "@chakra-ui/react";
+import { Avatar, Box, Button, Container, Flex, Image, Menu, MenuButton, MenuItem, MenuList, Text, useDisclosure } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
 import Logo from "../components/Logo";
 import styles from "./StudentDashboardLayout.module.css";
@@ -6,7 +6,7 @@ import Bell from "../assets/icons/bell.png";
 import { useUser } from "../hooks/useUser";
 import { useEffect, useState } from "react";
 import { HamburgerIcon } from "@chakra-ui/icons";
-import { handleLogout } from "../components/Navbar";
+import { LogoutAlert } from "../components/LogoutAlert";
 
 interface Props {
 	children: React.ReactNode;
@@ -14,6 +14,7 @@ interface Props {
 
 export default function LecturerDashboardLayout({ children }: Props) {
 	const user = useUser()
+	const { isOpen: alertIsOpen, onClose: alertOnClose, onOpen: alertOnOpen} = useDisclosure();
 
 	const [userData, setUserData] = useState<any>({})
 
@@ -40,7 +41,7 @@ export default function LecturerDashboardLayout({ children }: Props) {
 									</MenuButton>
 									<MenuList>
 										<MenuItem justifyContent={"center"} borderBottomWidth={"1"} as={NavLink} to="/lecturer-profile">
-											Profile
+											My Profile
 										</MenuItem>
 										<MenuItem justifyContent={"center"} borderBottomWidth={"1"} as={NavLink} to="/lecturer/my-courses">
 											My Courses
@@ -48,21 +49,23 @@ export default function LecturerDashboardLayout({ children }: Props) {
 										<MenuItem justifyContent={"center"} >
 											Notification
 										</MenuItem>
-										<MenuItem justifyContent={"center"} onClick={handleLogout} >
+										<MenuItem justifyContent={"center"} onClick={alertOnOpen} >
 											Logout
 										</MenuItem>
 									</MenuList>
 								</Menu>
 							</Box>
-							<Flex display={{ base: "none", md: "flex" }} columnGap={2}>
-								<Text as={NavLink} to="/lecturer/my-courses">Courses</Text>
-								<Text onClick={handleLogout} cursor={"pointer"}>Logout</Text>
+							<Flex display={{ base: "none", md: "flex" }} columnGap={3}>
+								<Text as={NavLink} to="/lecturer/my-courses">My Courses</Text>
+								<Text onClick={alertOnOpen} cursor={"pointer"}>Logout</Text>
 							</Flex>
 							<Flex display={{base: "none", md: "flex"}} alignItems={"center"}>
 								<Image src={Bell} boxSize="35px" />
 								<Avatar src={userData.photo_url} name={userData.name} as={NavLink} to={"/lecturer-profile"}/>
 							</Flex>
 						</Flex>
+
+						<LogoutAlert alertIsOpen={alertIsOpen} alertOnClose={alertOnClose} />
 				</Flex>
 			</Container>
 

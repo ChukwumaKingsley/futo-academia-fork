@@ -22,10 +22,13 @@
 		"@tanstack/react-query": "^4.32.6",
 		"@tanstack/react-query-devtools": "^4.32.6",
 		"axios": "^1.4.0",
+		"chart.js": "^4.4.1",
 		"cors-anywhere": "^0.4.4",
 		"dotenv": "^16.3.1",
+		"firebase": "^10.7.1",
 		"framer-motion": "^10.12.16",
 		"react": "^18.2.0",
+		"react-chartjs-2": "^5.2.0",
 		"react-countdown": "^2.3.5",
 		"react-dom": "^18.2.0",
 		"react-hot-toast": "^2.4.1",
@@ -33,7 +36,9 @@
 		"react-router-dom": "^6.12.1",
 		"react-spinners": "^0.13.8",
 		"react-toastify": "^9.1.3",
-		"uuid": "^9.0.0"
+		"styled-components": "^6.1.2",
+		"uuid": "^9.0.0",
+		"victory": "^36.7.0"
 	},
 	"devDependencies": {
 		"@types/node": "^20.4.8",

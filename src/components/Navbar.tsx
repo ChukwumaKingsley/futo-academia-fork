@@ -1,10 +1,11 @@
-import { Avatar, Box, Button, Container, Flex, Image, Menu, MenuButton, MenuItem, MenuList, Spacer, Text } from "@chakra-ui/react";
+import { Avatar, Box, Button, Container, Flex, Image, Menu, MenuButton, MenuItem, MenuList, Spacer, Text, useDisclosure } from "@chakra-ui/react";
 import Logo from "./Logo";
 import Bell from "../assets/icons/bell.png";
 import { useUser } from "../hooks/useUser";
 import { useEffect, useState } from "react";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import { NavLink } from "react-router-dom";
+import { LogoutAlert } from "./LogoutAlert";
 
 interface NavbarProps {
 	bgColor: string;
@@ -18,7 +19,8 @@ export const handleLogout = () => {
 };
 
 export default function Navbar({ bgColor }: NavbarProps) {
-	const user = useUser()
+	const { isOpen: alertIsOpen, onClose: alertOnClose, onOpen: alertOnOpen} = useDisclosure();
+	const user = useUser();
 	const [userData, setUserData] = useState(user)
 	useEffect(() => {
 	  setUserData(user)
@@ -42,7 +44,7 @@ export default function Navbar({ bgColor }: NavbarProps) {
 				
 				<Flex display={{ base: "none", md: "flex" }} columnGap={2} alignItems={"center"}>
 					<Image src={Bell} boxSize="35px" />
-					<Avatar src={userData.photo_url} name={userData.name} as={NavLink} to={"/profile"}/>
+					<Avatar src={userData.photo_url} name={userData.name} as={NavLink} to={"/lecturer-profile"}/>
 				</Flex>
 
 				<Flex alignItems={"center"} columnGap={2}>
@@ -69,7 +71,7 @@ export default function Navbar({ bgColor }: NavbarProps) {
 								<MenuItem justifyContent={"center"} >
 									Notification
 								</MenuItem>
-								<MenuItem justifyContent={"center"} onClick={handleLogout} >
+								<MenuItem justifyContent={"center"} onClick={alertOnOpen} >
 									Logout
 								</MenuItem>
 							</MenuList>
@@ -77,6 +79,7 @@ export default function Navbar({ bgColor }: NavbarProps) {
 					</Box>
 				</Flex>
 			</Flex>
+			<LogoutAlert alertIsOpen={alertIsOpen} alertOnClose={alertOnClose}  />
 		</Container>
 	);
 }

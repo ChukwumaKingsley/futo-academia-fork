@@ -1,40 +1,18 @@
 import ObjectiveQuestion from "../components/ObjectiveQuestion";
 import CourseTabs from "../layout/CourseTabs";
-import { Box, Text, Flex, Textarea } from "@chakra-ui/react";
+import { useParams } from "react-router-dom";
+import Instructions from "./Instructions";
+import AssessmentHeader from "./AssessmentHeader";
 
-// import { toast } from "react-toastify";
 
-export default function AddExam() {
+export default function AddAssessment() {
+	const { idx } = useParams();
+
 	return (
 		<CourseTabs>
-			<Box>
-				<Text fontSize="24px" color="#585AD4" fontWeight="bold" my={5}>
-					Assesment
-				</Text>
-
-				{/* <Flex alignItems="center" justifyContent={"space-between"} my={5}>
-					<NoOfQuestions />
-					<QuestionType />
-					<AllocatedTime />
-				</Flex> */}
-
-				<Flex my={3}>
-					<Box width="100%">
-						<Text fontWeight="bold" my={3} mt={8}>
-							Instructions
-						</Text>
-						<Textarea
-							placeholder="Type here"
-							sx={{
-								width: "100%",
-							}}
-							bgColor="#fff"
-						/>
-					</Box>
-				</Flex>
-
-				<ObjectiveQuestion />
-			</Box>
+			<AssessmentHeader />
+			<Instructions idx={idx} />
+			<ObjectiveQuestion />
 		</CourseTabs>
 	);
 }

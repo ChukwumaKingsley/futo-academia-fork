@@ -1,19 +1,57 @@
-import { Box, Table, Thead, Tbody, Tr, Th, Td, TableContainer, Flex, Text, Input } from "@chakra-ui/react";
+import { Box, Table, Thead, Tbody, Tr, Th, Td, TableContainer, Flex, Text, Input, Select } from "@chakra-ui/react";
 
 import EmptyIcon from "../assets/images/emptyfile.svg";
 import Loader from "./Loaders";
+import { useEffect, useState } from "react";
+import { useAssessment } from "../hooks/useAssessment";
 
-const AppTable = ({ title, header: headers, data: body = [], filterData, onSelectChange, isLoading, handleSearch }: any) => {
-	console.log({ body });
+const AppTable = ({ assessments }: any) => {
+	const [search, setSearch] = useState<any>("")
+	const [currentId, setCurrentId] = useState<any>(null)
+	const [tableData, setTableData] = useState<any>(null)
+
+	const { data, isLoading: isTableLoading } = useAssessment(currentId, search);
+
+	useEffect(() => {
+		setTableData(data)
+		console.log(assessments)
+	}, [])
+	
+	const handleSearch = (e: any) => {
+		setSearch(e?.target?.value);
+	};
+
+
+	const onSelectChange = (e: any) => {
+		setCurrentId(e?.target?.value)
+	}
+
+	const headers = [
+		{
+			title: "Name",
+			key: "name",
+			align: "left",
+		},
+		{
+			title: "Reg No",
+			key: "reg_num",
+			align: "left",
+		},
+		{
+			title: "Total (Score)",
+			key: "total",
+			align: "right",
+		},
+	];
+
 	return (
 		<Box>
-			This is the table
 			<Flex alignItems="center" my={8} justifyContent={"space-between"}>
 				<Text fontSize="32px" fontWeight="bold">
-					{title}
+					Results
 				</Text>
 				<Input placeholder="Search" ml={3} width="60%" onChange={handleSearch} bgColor="#fff" />
-				<select
+				<Select
 					style={{
 						padding: 10,
 						width: "80%",
@@ -21,13 +59,14 @@ const AppTable = ({ title, header: headers, data: body = [], filterData, onSelec
 						marginLeft: 14,
 					}}
 					onChange={(e) => onSelectChange(e)}
-					//defaultValue={filterData[0]?.id ?? ""}
+					defaultValue={assessments[0]?.id ?? ""}
 					placeholder="Select Assessment"
+					value={currentId}
 				>
-					{filterData?.map((x: any) => (
-						<option value={x?.id}>{x?.title}</option>
+					{assessments?.map((assessment: any, index: number) => (
+						<option value={assessment?.id} key={index}>{assessment?.title}</option>
 					))}
-				</select>
+				</Select>
 			</Flex>
 			<TableContainer mx="auto" mt={6}>
 				<Table variant="striped">
@@ -35,6 +74,7 @@ const AppTable = ({ title, header: headers, data: body = [], filterData, onSelec
 						<Tr>
 							{headers.map((header: any) => (
 								<Th
+									key={header?.title}
 									sx={{
 										color: "#fff",
 										textAlign: header?.align,
@@ -46,9 +86,9 @@ const AppTable = ({ title, header: headers, data: body = [], filterData, onSelec
 						</Tr>
 					</Thead>
 					<Tbody>
-						{body?.length > 0 &&
-							body?.map((data: any) => (
-								<Tr>
+						{tableData?.length > 0 &&
+							tableData?.map((data: any, index: number) => (
+								<Tr key={index}>
 									{headers.map(({ key, align }: any) => (
 										<Td
 											sx={{
@@ -62,12 +102,12 @@ const AppTable = ({ title, header: headers, data: body = [], filterData, onSelec
 							))}
 					</Tbody>
 				</Table>
-				{isLoading && (
+				{isTableLoading && (
 					<Box display={"flex"} mt={10} alignItems={"center"} mx="auto" justifyContent={"center"} w="100%" textAlign={"center"}>
 						<Loader height="30%" />
 					</Box>
 				)}
-				{body?.length <= 0 && (
+				{tableData?.length <= 0 && (
 					<Box display={"flex"} mt={10} alignItems={"center"} mx="auto" justifyContent={"center"} w="100%" textAlign={"center"}>
 						<Box>
 							<img

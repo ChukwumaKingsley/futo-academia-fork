@@ -6,7 +6,7 @@ const AddCourse = () => {
 	const navigate = useNavigate();
 
 	const handleAddCourseClick = () => {
-		navigate("/lecturer/courses-upload");
+		navigate("/courses-upload");
 	};
 	return (
 		<Box 
@@ -19,7 +19,7 @@ const AddCourse = () => {
 			padding="10px"
 			>
 			<AddIcon sx={{ fontSize: "25px" }} />
-			<Text>Add course</Text>
+			<Text>Create course</Text>
 		</Box>
 	);
 };

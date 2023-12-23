@@ -1,31 +1,45 @@
-import { Box, Flex, Input, Select, Text, Textarea, Button, useToast } from "@chakra-ui/react";
+import { Box, Flex, Input, Select, Text, Textarea, Button, useToast, Heading, FormControl, FormLabel, Center, AlertDialog, AlertDialogOverlay, AlertDialogContent, AlertDialogHeader, AlertDialogBody, AlertDialogFooter, useDisclosure } from "@chakra-ui/react";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import http from "../utils/http";
 import { v4 as uuidv4 } from "uuid";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import ObjectiveAnswer from "./ObjectiveAnswer";
 import { handleToast } from "../utils/handleToast";
 
+export interface QuestionArr {
+	id: string,
+	question: string,
+	mark: number | string,
+	question_type: string,
+	tolerance: number | string,
+	is_multi_choice: boolean,
+	num_answer: number,
+	assessment_id: any,
+}
+
 export default function ObjectiveQuestion() {
+	const navigate = useNavigate()
 	const [questionChoice, setQuestionChoice] = useState("");
 	const [openAnswer, setOpenAnswer] = useState(false);
 	const [answers, setAnswers] = useState("");
 	const [tolerence, setTolerance] = useState("");
 	const [dataID, setDataID] = useState("");
+	const cancelRef = useRef(null)
+	const { isOpen: alertIsOpen, onClose: alertOnClose, onOpen: alertOnOpen} = useDisclosure();
 
-	const { idx } = useParams();
+	const { id, idx } = useParams();
 
 	const toast = useToast();
 
 	const queryClient = useQueryClient();
 
-	const [questionArr, setQuestionArr] = useState<any>({
+	const [questionArr, setQuestionArr] = useState<QuestionArr>({
 		id: uuidv4(),
 		question: "",
-		mark: 0,
+		mark: "",
 		question_type: "",
 		tolerance: questionChoice === "maths" ? tolerence : 0,
 		is_multi_choice: false,
@@ -51,8 +65,27 @@ export default function ObjectiveQuestion() {
 		};
 	};
 
+	const uploadMutation = useMutation({
+		mutationFn: (id: any) => {
+			return http.put(`/assessments/${id}/activate`);
+		},
+		onSuccess: () => {
+			toast({ title: "Sucessfully updated", variant: "solid" });
+			queryClient.invalidateQueries({ queryKey: ["getassesments"] });
+		},
+		onError: (err: any) => {
+			if (err?.response) {
+				toast({
+					status: "error",
+					description: err?.response?.data?.detail,
+					position: "top"
+				})
+			}
+		},
+	});
+
 	const questionMutations = useMutation({
-		mutationFn: (question) => {
+		mutationFn: (question: QuestionArr) => {
 			return http.post("/questions", question);
 		},
 		onSuccess: ({ data }) => {
@@ -68,7 +101,7 @@ export default function ObjectiveQuestion() {
 	});
 
 	const answersMutation = useMutation({
-		mutationFn: (question) => {
+		mutationFn: (question: QuestionArr) => {
 			return http.post("/answers", question);
 		},
 		onSuccess: () => {
@@ -98,32 +131,44 @@ export default function ObjectiveQuestion() {
 		setQuestionArr({ ...questionArr, [e?.target?.name]: e?.target?.value });
 	};
 
-	console.log({ questionChoice });
+	const deleteAssessment = useMutation({
+		mutationFn: async ({ assessment_id }: any) => {
+				return await http.delete(`/assessments/${assessment_id}`);
+			},
+			onSuccess: () => {navigate(`/courses/${id}/assessments`)},
+			onError: (error: any) => {console.log(error)}
+		});
+
 	return (
 		<>
 			<Box>
 				<Flex alignItems="center" justifyContent={"space-between"}>
-					<Text fontWeight="bold" fontSize="2xl" my={8}>
+					<Heading as={"h4"} size={"md"} mt={5}>
 						Questions
-					</Text>
+					</Heading>
 				</Flex>
 				<Flex w="100%" justifyContent="space-around">
+					{answerData?.questions.length === 0 && 
+					<Text>No Questions</Text>}
 					<Box width="100%">
 						{answerData?.questions.map((x: any, i: number) => (
-							<ObjectiveAnswer {...x} index={i + 1} />
+							<ObjectiveAnswer {...x} index={i + 1} key={i} />
 						))}
 					</Box>
 				</Flex>
 			</Box>
 			<Box my={6} border="1px solid grey" p={4} borderRadius="8px">
+				<Heading size={"md"} width={"100%"} textAlign={"center"} color={"#696CFF"}>Add Question</Heading>
 				<Box>
-					<Text fontWeight="bold" my={3} mt={18}>
-						Question type
-					</Text>
-					<Textarea bgColor="#fff" name="question" value={questionArr["question"]} onChange={handleChange} placeholder="Type Question here" my={2} />
-					<Flex>
+					<FormControl my={2}>
+						<FormLabel color={"black"}>Question</FormLabel>
+						<Textarea bgColor="#fff" name="question" value={questionArr["question"]} onChange={handleChange} placeholder="Type Question here" />
+					</FormControl>
+					<FormControl>
+						<FormLabel color={"black"}>Question Type</FormLabel>
 						<Select
-							placeholder="Question type"
+							placeholder="Select question type"
+							bg={"#fff"}
 							onChange={(e) => {
 								setQuestionChoice(e?.target?.value);
 								handleChange(e);
@@ -136,18 +181,41 @@ export default function ObjectiveQuestion() {
 							<option value="sub_obj">Subjective</option>
 							<option value="maths">Maths</option>
 						</Select>
-					</Flex>
+					</FormControl>
+					<FormControl my={2}>
+						<FormLabel color={"black"}>Total Marks</FormLabel>
+						<Input placeholder="Mark (in number)" name="mark" value={questionArr["mark"]} type="number" onChange={handleChange} bgColor={"white"} />
+					</FormControl>
 
-					<Input placeholder="Mark (in number)" name="mark" value={questionArr["mark"]} type="number" onChange={handleChange} my={2} bgColor={"white"} />
-					<Box mt={3}>{questionChoice === "nlp" && openAnswer && <Textarea onChange={(e) => setAnswers(e?.target?.value)} placeholder="input answer" bgColor="white" />}</Box>
+					<Box mt={3}>
+						{questionChoice === "nlp" && openAnswer && 
+						<FormControl>
+							<FormLabel color={"black"}>Answer</FormLabel>
+							<Textarea onChange={(e) => setAnswers(e?.target?.value)} placeholder="input answer" bgColor="white" />
+						</FormControl>
+						}
+					</Box>
 					<Box mt={3}>{questionChoice === "sub_obj" && openAnswer && <Textarea placeholder="input answer" onChange={(e) => setAnswers(e?.target?.value)} bgColor="white" />}</Box>
-					<Box>{questionChoice === "obj" && openAnswer && <ObjectiveComponent dataId={dataID} answersMutation={answersMutation} />}</Box>
+					<Box>
+						{
+						questionChoice === "obj" && openAnswer && 
+						<ObjectiveComponent dataId={dataID} answersMutation={answersMutation} />
+						}
+					</Box>
 					<Box>
 						{questionChoice === "maths" && questionArr["question_type"] === "maths" && (
-							<Input type="number" bgColor="white" placeholder="Tolerance" onChange={(e) => setTolerance(e?.target?.value)} my={2} />
+							<FormControl my={2}>
+								<FormLabel  color={"black"}>Tolerance</FormLabel>
+								<Input type="number" bgColor="white" placeholder="Tolerance" onChange={(e) => setTolerance(e?.target?.value)}  />
+							</FormControl>
 						)}
 					</Box>
-					<Box>{questionChoice === "maths" && openAnswer && <Input type="number" onChange={(e) => setAnswers(e?.target?.value)} bgColor="white" placeholder="Maths Answer" />}</Box>
+					<Box>{questionChoice === "maths" && openAnswer && 
+						<FormControl my={4}>
+							<FormLabel  color={"black"}>Answer</FormLabel>
+							<Input type="number" onChange={(e) => setAnswers(e?.target?.value)} bgColor="white" placeholder="Maths Answer" />
+						</FormControl>
+						}</Box>
 					<Box display="flex" alignItems="center" justifyContent="flex-end">
 						{!dataID ? (
 							<Button
@@ -158,13 +226,16 @@ export default function ObjectiveQuestion() {
 									questionMutations.mutate(questionArr);
 								}}
 								my={2}
+								minWidth={"min-content"}
+								colorScheme="blue"
+								isDisabled = {questionArr.question === "" || questionArr.question_type === "" || questionArr.mark === ""}
 							>
 								Save Question
 							</Button>
 						) : (
 							<>
 								{questionChoice !== "obj" && (
-									<Button isLoading={answersMutation.isLoading} onClick={() => answersMutation.mutate(constructAnswer())} my={2}>
+									<Button isLoading={answersMutation.isLoading} onClick={() => answersMutation.mutate(constructAnswer())} my={2} minW={"min-content"} colorScheme="blue">
 										Save answer
 									</Button>
 								)}
@@ -173,6 +244,37 @@ export default function ObjectiveQuestion() {
 					</Box>
 				</Box>
 			</Box>
+
+			<Center columnGap={3} mt={10}>
+				<Button variant={"outline"} colorScheme="blue" onClick={() => {navigate(`/courses/${id}/assessments`)}}minWidth={"min-content"}>Done</Button>
+				<Button variant={"solid"} colorScheme="blue" onClick={() => uploadMutation.mutate(idx)} minWidth={"min-content"}>Make Active</Button>
+				<Button variant={"solid"} colorScheme="red" onClick={alertOnOpen} minWidth={"min-content"}>Delete assessment</Button>
+			</Center>
+
+			<AlertDialog 
+				leastDestructiveRef={cancelRef} 
+				isOpen={alertIsOpen} 
+				onClose={alertOnClose}
+					>
+				<AlertDialogOverlay>
+					<AlertDialogContent>
+						<AlertDialogHeader>
+							Delete Assessment
+						</AlertDialogHeader>
+						<AlertDialogBody>
+							Are you sure? This action cannot be undone!
+						</AlertDialogBody>
+						<AlertDialogFooter gap={2}>
+							<Button ref={cancelRef} onClick={alertOnClose} size={"md"}>
+								Cancel
+							</Button>
+							<Button colorScheme="red" onClick={()=>{deleteAssessment.mutate({assessment_id: id})}} size={"md"}>
+								Delete
+							</Button>
+						</AlertDialogFooter>
+					</AlertDialogContent>
+				</AlertDialogOverlay>
+			</AlertDialog>
 		</>
 	);
 }
@@ -211,22 +313,23 @@ const ObjectiveComponent = ({ dataId, answersMutation }: any) => {
 
 	return (
 		<Box>
-			<Flex alignItems="center" justifyContent="space-between">
-				<Box w="100%">
-					<Text fontWeight="bold">A</Text>
+			<Text fontWeight={"bold"}>Options</Text>
+			<Flex alignItems="center" justifyContent="space-between" columnGap={2} flexDir={{base: "column", md: "row"}}>
+				<Box w="100%" display={"flex"} alignItems={"center"} gap={2}>
+					<Text fontWeight="bold">A.</Text>
 					<Input bgColor="white" name="A" onChange={(e) => setA(e?.target?.value)} />
 				</Box>
-				<Box w="100%">
+				<Box w="100%" display={"flex"} alignItems={"center"} gap={2}>
 					<Text fontWeight="bold">B.</Text>
 					<Input bgColor="white" name="B" onChange={(e) => setB(e?.target?.value)} />
 				</Box>
 			</Flex>
-			<Flex alignItems="center" justifyContent="space-between" mt={3}>
-				<Box w="100%">
+			<Flex alignItems="center" justifyContent="space-between" mt={3} columnGap={2} flexDir={{base: "column", md: "row"}}>
+				<Box w="100%" display={"flex"} alignItems={"center"} gap={2}>
 					<Text fontWeight="bold">C.</Text>
 					<Input bgColor="white" name="C" onChange={(e) => setC(e?.target?.value)} />
 				</Box>
-				<Box w="100%">
+				<Box w="100%" display={"flex"} alignItems={"center"} gap={2}>
 					<Text fontWeight="bold">D.</Text>
 					<Input bgColor="white" name="D" onChange={(e) => setD(e?.target?.value)} />
 				</Box>
@@ -259,8 +362,10 @@ const ObjectiveComponent = ({ dataId, answersMutation }: any) => {
 						setC("");
 						setD("");
 					}}
+					minWidth={"min-content"}
+					colorScheme="blue"
 				>
-					Save Answer Objective
+					Save answer
 				</Button>
 			</Flex>
 		</Box>

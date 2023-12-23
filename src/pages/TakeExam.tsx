@@ -16,14 +16,17 @@ import {
 	ModalFooter,
 	ModalBody,
 	ModalCloseButton,
+	OrderedList,
+	ListItem,
+	Input,
 } from "@chakra-ui/react";
-import { useNavigate, useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 
 import confirmAlert from "../assets/alert.gif";
 
 import http from "../utils/http";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Loader from "../components/Loaders";
 
 import TimerBox from "../components/TimerBox";
@@ -31,21 +34,21 @@ import Countdown from "react-countdown";
 
 export default function TakeExam() {
 	const { courseId: idx, id } = useParams();
-	const navigate = useNavigate();
 	const toast = useToast();
+	const [timeData, setTimeData] = useState<any>(null)
 
-	const [examDate, setExamDate] = useState<any>(Date.now());
+	const { refetch: refetchTimeData } = useQuery({
+		queryKey: ["getTimeData", idx, id],
+		queryFn: () => http.get(`/assessment_times/${id}/${idx}`).then((r) => r.data),
+		onSuccess(data) {
+			setTimeData(data)
+		},
+	});
 
-	useEffect(() => {
-		setExamDate(Date.now());
-	}, []);
 
 	const { data: answerData, isLoading } = useQuery({
 		queryKey: ["getAnswersss", idx],
 		queryFn: () => http.get(`/assessments/${idx}/assessment_questions`).then((r) => r.data),
-		onSuccess(data) {
-			console.log("Quess", data);
-		},
 		onError: (err: any) => {
 			console.log("Error", err);
 			if (err?.response?.status === 405) {
@@ -56,22 +59,20 @@ export default function TakeExam() {
 						color: "white",
 					},
 				});
-				setTimeout(() => {
-					navigate(`/lecturer/courses/${id}`);
-				}, 1000);
 			}
 		},
+		// onSuccess: (data: any) => {console.log(data)}
 	});
-
+	
 	const { data: examData } = useQuery({
 		queryKey: ["getCourseID", id],
 		queryFn: () => http.get(`/courses/${id}`).then((r) => r.data),
-		onSuccess: (data: any) => console.log("Exam Successful", data),
+		// onSuccess: (data: any) => console.log("Exam Successful", data),
 		onError: (err) => console.log("error", err),
 	});
-
+	
 	const [submissions, setSubmissions] = useState<any>([]);
-
+	
 	const { isOpen, onOpen, onClose } = useDisclosure();
 
 	const submissionMutation: any = useMutation({
@@ -81,9 +82,9 @@ export default function TakeExam() {
 		onSuccess: () => {
 			onClose();
 			toast({
-				title: "Submitted",
+				title: "Submission successful!",
 			});
-			navigate(`/lecturer/courses/${id}`);
+			refetchTimeData()
 		},
 		onError: (err: any) => {
 			toast({
@@ -96,11 +97,11 @@ export default function TakeExam() {
 			});
 		},
 	});
-
+	
 	const handleSubmit = () => {
 		onOpen();
 	};
-
+	
 	if (isLoading) {
 		return (
 			<>
@@ -109,26 +110,8 @@ export default function TakeExam() {
 		);
 	}
 
-	const renderer = ({ hours, minutes, seconds, completed }: any) => {
-		if (completed) {
-			return (
-				<Box
-					sx={{
-						border: "1px solid #B6B3C7",
-					}}
-					borderRadius="8px"
-					p={4}
-					my={2}
-					width="20%"
-				>
-					<Text fontWeight={"bold"} textAlign={"center"}>
-						Completed!
-					</Text>
-				</Box>
-			);
-		} else {
-			return <TimerBox hours={hours} minutes={minutes} seconds={seconds} />;
-		}
+	const renderer = ({ days, hours, minutes, seconds }: any) => {
+		return <TimerBox days={days} hours={hours} minutes={minutes} seconds={seconds} />;
 	};
 
 	return (
@@ -176,15 +159,14 @@ export default function TakeExam() {
 				</ModalContent>
 			</Modal>
 			<Box bgColor={"#f3f6ff"} w="100%" minH={"100vh"}>
-				<Box mx={100} py={50}>
-					<Box w="50%" mx="auto" mt={10}>
-						{answerData?.questions?.length > 0 && (
+				<Box px={10} py={50}>
+					<Box mx="auto" mt={10} display={"flex"} flexDir={"column"}>
+						
 							<>
 								<Text textAlign={"center"} color="#232455" fontWeight={"bold"}>
 									{"Federal University of Technology Owerri".toUpperCase()} <br /> FACULTY OF {examData?.faculty} <br /> {examData?.semester === 1 ? "HARMATTAN" : "RAIN"} SEMESTER
-									EXAMINATION (2022/2023)
 								</Text>
-								<Text>COURSE TITLE: {examData?.title.toString().toUpperCase()}</Text>
+								<Text mt={5}>COURSE TITLE: {examData?.title.toString().toUpperCase()}</Text>
 								<Flex justifyContent={"space-between"}>
 									<Text my={1}>
 										{" "}
@@ -198,19 +180,29 @@ export default function TakeExam() {
 								<Flex justifyContent={"space-between"}>
 									<Text my={1}>
 										{" "}
-										<b> NO OF CREDITS:</b> {examData?.units} UNITS
+										<b> NO. OF CREDITS:</b> {examData?.units}
 									</Text>
 									<Text my={1}>
 										<b>ALLOCATED TIME:</b> {answerData?.duration} MINUTES
 									</Text>
 								</Flex>
+								<Text textAlign={"center"} mt={10} mb={5}>{answerData?.title.toUpperCase()}</Text>
 
-								<Box textAlign={"center"} my={10}>
-									<b>INSTRUCTION: ANSWER ALL QUESTIONS</b>
-								</Box>
+								{answerData?.instructions.length > 0 &&
+									<Box>
+										<b><i>Instructions
+										</i></b>
+										<OrderedList>
+											{answerData?.instructions?.map((instruction: any, index: any) => 
+											<ListItem key={index}>
+												<Text textAlign={"left"}>{instruction.instruction}</Text>
+											</ListItem>
+											)}
+										</OrderedList>
+									</Box>
+								}
 
-								<Box mx="auto">
-									{!(Math.floor(Date?.now() / 1000) > convertToEpoch(answerData?.end_date)) && (
+								<Box mx="auto" mt={5}>
 										<Countdown
 											renderer={renderer}
 											onComplete={() => {
@@ -219,32 +211,47 @@ export default function TakeExam() {
 													submissions,
 												});
 											}}
-											date={examDate + answerData?.duration * 1000 * 60}
+											date={timeData?.end_datetime ? timeData?.end_datetime : new Date((new Date(timeData?.start_datetime)).getTime() + answerData?.duration*60*1000)}
 										/>
-									)}
 								</Box>
 							</>
-						)}
-						{answerData?.questions.map((x: any, i: number) => (
-							<ObjectiveAnswer
-								question_id={x?.id}
-								question={x?.question}
-								answers={x?.answers}
-								submissions={submissions}
-								setSubmissions={setSubmissions}
-								question_type={x?.question_type}
-								index={i + 1}
-								{...x}
-							/>
-						))}
-						{answerData?.questions?.length > 0 && (
-							<Flex justifyContent={"end"}>
-								<Button onClick={handleSubmit}>Submit</Button>
-							</Flex>
-						)}
-						{answerData?.questions.length === 0 && (
+
+							{answerData?.questions?.length > 0 && 
+							<>
+								{
+								answerData?.questions.map((x: any, i: number) => (
+									<ObjectiveAnswer
+									key={i}
+									question_id={x?.id}
+									question={x?.question}
+									answers={x?.answers}
+									submissions={submissions}
+									setSubmissions={setSubmissions}
+									question_type={x?.question_type}
+									index={i + 1}
+									{...x}
+									/>
+								))}
+								<Flex justifyContent={"end"}>
+									<Button onClick={handleSubmit} variant={"solid"} colorScheme="blue">Submit</Button>
+								</Flex>
+							</>
+							}
+
+						{answerData?.questions.length === 0 && !timeData?.end_datetime && (
 							<Box>
-								<Text textAlign={"center"}>No Questions</Text>
+								<Text textAlign={"center"} mt={20}>No Questions</Text>
+							</Box>
+						)}
+
+						{answerData?.questions.length === 0 && timeData?.end_datetime && (
+							<Box>
+								<Text textAlign={"center"} mt={20} color={"#696CFF"} fontSize={"1.5rem"}>
+									YOUR SUBMISSION HAS BEEN RECORDED.
+								</Text>
+	 							<Text textAlign={"center"} mt={20} color={"black"}>
+	 								Return to <Text as={NavLink} to={`/courses/${id}`} textDecor={"underline"} textColor={"blue"}>Course Homepage</Text>.
+								</Text>
 							</Box>
 						)}
 					</Box>
@@ -288,11 +295,11 @@ function ObjectiveAnswer({ question, answers, question_id, question_type, mark, 
 							{question}
 						</Text>
 						{mark && (
-							<Box bgColor={"#696cfe"} height={"50px"} width={"50px"} alignItems={"center"} flexDirection={"column"} display={"flex"} justifyContent={"center"} p={4}>
-								<Text fontWeight={"bold"} color={"#fff"}>
+							<Box height={"50px"} width={"50px"} alignItems={"center"} flexDirection={"column"} display={"flex"} justifyContent={"center"} p={4}>
+								<Text fontWeight={"bold"} color={"#696cfe"}>
 									{mark ?? "--"}
 								</Text>
-								<Text fontWeight={"bold"} color={"white"}>
+								<Text fontWeight={"bold"} color={"#696cfe"}>
 									Marks
 								</Text>
 							</Box>
@@ -303,27 +310,26 @@ function ObjectiveAnswer({ question, answers, question_id, question_type, mark, 
 					{question_type === "obj" ? (
 						<Stack spacing={4} direction="column">
 							<RadioGroup onChange={handleAnswering} value={radio} dir="column" display={"flex"} flexDirection={"column"}>
-								{answers?.map((x: any) => {
+								{answers?.map((x: any, i: number) => {
 									return (
-										<Radio value={String(x?.id)} colorScheme="brand" my={2}>
+										<Radio key={i} value={String(x?.id)} colorScheme="brand" my={2}>
 											{x?.option}
 										</Radio>
 									);
 								})}
 							</RadioGroup>
 						</Stack>
-					) : (
-						<Textarea as={"input"} onChange={handleAnswering} type={question_type === "maths" ? "number" : ""} placeholder="Please input answer here" />
-					)}
+					): 
+					question_type === "math" ? (
+						<Input type="number" onChange={handleAnswering} />
+						):
+						question_type === "sub_obj" ? (
+							<Input type="number" onChange={handleAnswering} />
+					) : 
+						<Textarea onChange={handleAnswering} placeholder="Answer" />
+					}
 				</Box>
 			</Box>
 		</div>
 	);
 }
-
-const convertToEpoch = (timestamp: any) => {
-	const dt = new Date(timestamp);
-	const epochTime = dt.getTime() / 1000;
-
-	return Math.floor(epochTime);
-};
