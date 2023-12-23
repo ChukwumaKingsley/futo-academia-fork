@@ -21,7 +21,6 @@ export default function ViewCourse() {
 	});
 
 	useEffect(() => {
-	  console.log(enrolled)
 	}, [enrolledIsLoading])
 	
 
@@ -34,21 +33,6 @@ export default function ViewCourse() {
 			}
 			}
 	});
-
-
-
-
-	useEffect(() => {
-		console.log(
-			"idddd",
-			currUp?.filter((x: any) => x?.is_marked)
-		);
-		console.log(currUp)
-	}, []);
-
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-
-
 
 	const renderer = ({ days, hours, minutes, seconds, completed }: any) => {
 		if (completed) {

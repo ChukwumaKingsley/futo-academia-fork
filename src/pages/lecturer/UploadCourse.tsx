@@ -41,8 +41,6 @@ const UploadCourse = () => {
 	  setCourseInfo({...courseInfo, faculty: user.faculty})
 	}, [user.isLoading])
 	
-	console.log(courseInfo)
-
 	const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
 		const { name, value } = event.target;
 		setCourseInfo((prevCourseInfo) => ({
@@ -95,14 +93,8 @@ const UploadCourse = () => {
 				level: courseInfo.level,
 			}, 
 			);
-
-			
-
-			if (createCourseMutation.isSuccess) {
-				console.log(createCourseMutation.data)
-			}
 		} catch (error) {
-			console.log(error);
+			throw error;
 		}
 	};
 	useEffect(() => {

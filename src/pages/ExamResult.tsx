@@ -29,7 +29,6 @@ export default function ExamResult() {
 	const { data: examData } = useQuery({
 		queryKey: ["getCourseID", idx],
 		queryFn: () => http.get(`/courses/${idx}`).then((r) => r.data),
-		onError: (err) => console.log("error", err),
 	});
 
 	const handleAns = (ans: any, type: any) => {

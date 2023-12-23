@@ -47,9 +47,6 @@ export default function ViewCourse() {
 	const { data: myResults } = useQuery({
 		queryKey: ["my results", id],
 		queryFn: () => http.get(`/courses/results/${id}/${user?.id}`,).then((r) => r.data),
-		onSuccess(data) {
-			console.log(data)
-		},
 		enabled: !user.isLoading && !user.is_instructor
 	});
 
@@ -66,9 +63,6 @@ export default function ViewCourse() {
 		mutationFn: (id: any) => {
 			return http.put(`/assessments/${id}/end-automatic`)
 		},
-		onError: (err: any) => (
-			console.log(err)
-		)
 	})
 
 	useEffect(() => {
@@ -91,8 +85,7 @@ export default function ViewCourse() {
 			mutationFn: async ({ course_code, assessment_id }: any) => {
 					return await http.post(`/assessment_times/${course_code}/${assessment_id}`);
 				},
-				onSuccess: (data: any) => {console.log(data); navigate(`/exams/${id}/${data?.data?.assessment_id}`);},
-				onError: (error: any) => {console.log(error)}
+				onSuccess: (data: any) => {navigate(`/exams/${id}/${data?.data?.assessment_id}`);},
 			});
 
 	const handleBegin = ({course_code, assessment_id}: any) => {

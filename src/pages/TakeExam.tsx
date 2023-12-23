@@ -50,7 +50,6 @@ export default function TakeExam() {
 		queryKey: ["getAnswersss", idx],
 		queryFn: () => http.get(`/assessments/${idx}/assessment_questions`).then((r) => r.data),
 		onError: (err: any) => {
-			console.log("Error", err);
 			if (err?.response?.status === 405) {
 				toast({
 					title: "Your submission has been recorded" || err?.response?.data?.detail,
@@ -61,14 +60,11 @@ export default function TakeExam() {
 				});
 			}
 		},
-		// onSuccess: (data: any) => {console.log(data)}
 	});
 	
 	const { data: examData } = useQuery({
 		queryKey: ["getCourseID", id],
 		queryFn: () => http.get(`/courses/${id}`).then((r) => r.data),
-		// onSuccess: (data: any) => console.log("Exam Successful", data),
-		onError: (err) => console.log("error", err),
 	});
 	
 	const [submissions, setSubmissions] = useState<any>([]);

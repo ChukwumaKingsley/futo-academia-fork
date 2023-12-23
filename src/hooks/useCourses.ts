@@ -29,7 +29,6 @@ export function useCreateCourse() {
 				});
 				return response
 			} catch (error: any) {
-				console.log(error.response.data.detail)
 				if (error?.response) {
 					toast({
 						status: "error",
@@ -76,7 +75,6 @@ export function useUpdateCourse() {
 				navigate(`/lecturer/courses/${course_code}`)
 				return response
 			} catch (error: any) {
-				console.log(error.response.data.detail)
 				if (error?.response) {
 					toast({
 						status: "error",

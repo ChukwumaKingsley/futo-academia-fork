@@ -35,7 +35,6 @@ export default function AddAssessment() {
 		queryKey: ["getAssessment", idx],
 		queryFn: () => http.get(`/assessments/${idx}`).then((r) => r.data),
 	});
-	console.log(assessmentData)
 
 	useEffect(() => {
 	  setExamSetUp({
@@ -75,7 +74,6 @@ export default function AddAssessment() {
 				return await http.delete(`/assessments/${assessment_id}`);
 			},
 			onSuccess: () => {navigate(`/courses/${id}/assessments`)},
-			onError: (error: any) => {console.log(error)}
 		});
 
 

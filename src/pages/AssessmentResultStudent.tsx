@@ -23,8 +23,6 @@ export const AssessmentResultsStudent = () => {
 		enabled: !user.isLoading && user.is_instructor,
 	});
 
-    console.log(stats)
-
     const handleAns = (ans: any, type: any) => {
 		if (type === "obj") {
 			const val = ans?.answers?.find((x: any) => {

@@ -49,7 +49,7 @@ export default function Password() {
 			},
 			)
 		} catch (error) {
-			console.log(error);
+      throw error;
 		}
   }
 
