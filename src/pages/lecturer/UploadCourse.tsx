@@ -101,10 +101,13 @@ const UploadCourse = () => {
 		if (createCourseMutation.isSuccess) {
 			coursePhotoMutation.mutate({ course_code: courseInfo.code, file: courseInfo.coverImage });
 			navigate(`/lecturer/courses/${courseInfo.code}`)
-			enrollStudentMutation.mutate({
-			file: courseInfo.classList,
-			course_code: courseInfo.code,
-			});
+			
+			if (courseInfo.classList) {
+				enrollStudentMutation.mutate({
+				file: courseInfo.classList,
+				course_code: courseInfo.code,
+				});
+			}
 		}
 	}, [createCourseMutation.isSuccess])
 
