@@ -8,7 +8,7 @@ export const useUser = () => {
 	}
 	
 	try {
-		const { isLoading, data, error, isError } = useQuery(["user_by_id"], () => http.get("/users"), {
+		const { isLoading, data} = useQuery(["user_by_id"], () => http.get("/users"), {
 			enabled: true,
 			onError: (error: any) => {
 				if (error.response.status === 401) {
@@ -16,17 +16,12 @@ export const useUser = () => {
 					window.location.href = "/"
 				}
 			},
-			onSuccess() {
-				// console.log("user data", data);
-			},
 		});
-		if (isError) {
-			console.log("bleblobab", error)
-		}
+		
 		return { isLoading, ...data?.data };
 	}
 	catch (error: any) {
-		console.log("error baba", error)
+		throw error
 	}
 
 };

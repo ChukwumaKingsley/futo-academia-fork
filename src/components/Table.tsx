@@ -14,7 +14,6 @@ const AppTable = ({ assessments }: any) => {
 
 	useEffect(() => {
 		setTableData(data)
-		console.log(assessments)
 	}, [])
 	
 	const handleSearch = (e: any) => {

@@ -32,7 +32,6 @@ export default function AssessmentCard({ is_active, title, id, idx, is_marked, i
 			queryClient.invalidateQueries({ queryKey: ["getassesments"] });
 		},
 		onError: (err: any) => {
-			console.log("toast err", err);
 			toast({ title: err?.response?.data?.detail || err?.message });
 		},
 	});
@@ -101,7 +100,6 @@ export default function AssessmentCard({ is_active, title, id, idx, is_marked, i
 				return await http.post(`/assessment_times/${course_code}/${assessment_id}`);
 			},
 			onSuccess: (data: any) => {navigate(`/exams/${idx}/${data?.data?.assessment_id}`);},
-			onError: (error: any) => {console.log(error)}
 		});
 
 	const handleBegin = ({course_code, assessment_id}: any) => {
@@ -113,7 +111,6 @@ export default function AssessmentCard({ is_active, title, id, idx, is_marked, i
 				return await http.delete(`/assessments/${assessment_id}`);
 			},
 			onSuccess: () => {setDisplay(false)},
-			onError: (error: any) => {console.log(error)}
 		});
 
 	const renderer1 = ({ days, hours, minutes, seconds, completed }: any) => {

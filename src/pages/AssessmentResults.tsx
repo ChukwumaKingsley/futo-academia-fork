@@ -29,7 +29,6 @@ export const AssessmentResults = () => {
 		queryKey: ["assessmentResultsStats", idx],
 		queryFn: () => http.get(`/assessments/stats/${idx}`, ).then((r) => r.data),
 	});
-    console.log(assessmentResultsStats)
 
     const { isLoading, refetch } = useQuery({
 		queryKey: ["getStudentRestulss", idx],

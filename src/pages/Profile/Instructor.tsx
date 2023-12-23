@@ -17,8 +17,6 @@ export default function Profile() {
 		setFormData(user);
 	}, [user.isLoading]);
 
-	console.log(formData)
-
 	const handleChange = (event: any) => {
 		const { name, value } = event.target;
 		setFormData((prevData: any) => ({
@@ -49,7 +47,7 @@ export default function Profile() {
 				setFormData(uploadPhotoMutation.data)
 			}
 		} catch (error) {
-			console.log(error);
+			throw error
 		}
 	};
 	
@@ -74,7 +72,7 @@ export default function Profile() {
 				setFormData(updateProfileMutation.data)
 			}
 		} catch (error) {
-			console.log(error);
+			throw error
 		}
 	};
 

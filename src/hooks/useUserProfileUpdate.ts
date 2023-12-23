@@ -84,7 +84,6 @@ export function usePasswordUpdate() {
 				  return res.data
 			} catch (error: any) {
 				if (error.response) {
-					console.log(error.response.data.detail)
 					toast({
 						status: "error",
 						description: error.response.data.detail,

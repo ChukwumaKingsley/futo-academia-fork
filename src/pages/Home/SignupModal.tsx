@@ -71,7 +71,6 @@ export default function SignupModal({ isOpen, openLogin, onClose }:{isOpen: bool
 	const handleSignup = async (event: FormEvent) => {
 		event.preventDefault();
 
-		console.log("Form", formData);
 		signUpMutation.mutate(formData);
 	};
 

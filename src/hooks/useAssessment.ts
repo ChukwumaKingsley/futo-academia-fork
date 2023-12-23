@@ -35,7 +35,6 @@ export function useAddInstructions() {
 			queryClient.invalidateQueries({ queryKey: ["addInstructions"] });
 		},
 		onError: (err: any) => {
-			console.log("toast err", err);
 			toast({ title: err?.response?.data?.detail || err?.message });
 		},
 	});
@@ -54,7 +53,6 @@ export function useUpdateInstruction() {
 			}
 		},
 		onError: (err: any) => {
-			console.log("toast err", err);
 			toast({ title: err?.response?.data?.detail || err?.message });
 		},
 	});
@@ -77,7 +75,6 @@ export function useDeleteInstruction() {
 			queryClient.invalidateQueries({ queryKey: ["deleteInstruction"] });
 		},
 		onError: (err: any) => {
-			console.log("toast err", err);
 			toast({ title: err?.response?.data?.detail || err?.message });
 		},
 	});

@@ -14,8 +14,6 @@ function useLogin() {
 
 				const res = await http.post("/login", formData);
 
-				console.log("ress", res);
-
 				localStorage.setItem("token", res.data.access_token);
 
 				if (res.data.is_instructor) {
@@ -38,8 +36,6 @@ function useLogin() {
 				return error;
 			}
 		},
-		onSuccess: (data) => console.log("Login data", data),
-		onError: (err) => console.log("Data error", err),
 	});
 }
 

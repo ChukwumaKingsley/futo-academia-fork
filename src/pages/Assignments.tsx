@@ -39,7 +39,6 @@ export default function Assignments() {
 		queryKey: ["getassesments", id],
 		queryFn: () => http.get(`/courses/${id}/assessments`).then((r) => r.data),
 		onSuccess: (data: any) => setData(data),
-		onError: (err) => console.log("error", err),
 	});
 
 	useEffect(() => {
@@ -76,9 +75,6 @@ export default function Assignments() {
 		mutationFn: (id: any) => {
 			return http.put(`/assessments/${id}/end-automatic`)
 		},
-		onError: (err: any) => (
-			console.log(err)
-		)
 	})
 
 	useEffect(() => {
@@ -136,7 +132,6 @@ export default function Assignments() {
 			});
 		},
 		onError: (err: any) => {
-			console.log("Mark errr", err);
 			handleToast(err);
 		},
 	});

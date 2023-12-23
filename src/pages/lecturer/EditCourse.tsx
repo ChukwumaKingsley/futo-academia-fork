@@ -107,7 +107,6 @@ const EditCourse = () => {
 		try {
 			event.preventDefault();
 
-			console.log(id, courseInfo)
 			editCourseMutation.mutate({
 				old_course_code: id,
 				course_code: courseInfo.code,
@@ -119,7 +118,7 @@ const EditCourse = () => {
 				level: courseInfo.level,
 			})
 		} catch (error) {
-			console.log(error);
+			throw error
 		}
 	};
 

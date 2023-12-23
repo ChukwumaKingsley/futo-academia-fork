@@ -13,15 +13,13 @@ function CourseHeader({ course_code, title, description, units, course_photo_url
 
 	const enrollRequestMutation = useMakeEnrollRequest()
 	const handleEnroll = () => {
-		enrollRequestMutation.mutate({course_code, reg_num},
-			{onSuccess: () => (console.log(enrollRequestMutation.data))})
+		enrollRequestMutation.mutate({course_code, reg_num},)
 			refetchEnrollmentStatus()
 	}
 
 	const joinRequestMutation = useMakeEnrollRequestInstructor()
 	const handleJoin = () => {
-		joinRequestMutation.mutate({course_code},
-			{onSuccess: () => (console.log(enrollRequestMutation.data))})
+		joinRequestMutation.mutate({course_code},)
 			refetchEnrollmentStatus()
 	}
 

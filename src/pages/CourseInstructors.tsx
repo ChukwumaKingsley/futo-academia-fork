@@ -19,7 +19,6 @@ export default function CourseInstructors() {
 	const { isLoading: coordinatorLoading } = useQuery({
 		queryKey: ["getCoordinators", id],
 		queryFn: () => http.get(`/instructors/coordinators/${id}`).then((r) => r.data),
-		onError: (err) => console.log("error", err),
     onSuccess: (data) => {
 		setCoordinatorsList(data)
     },
@@ -28,7 +27,6 @@ export default function CourseInstructors() {
 	const { isLoading: instructorLoading } = useQuery({
 		queryKey: ["getInstructors", id],
 		queryFn: () => http.get(`/instructors/${id}`).then((r) => r.data),
-		onError: (err) => console.log("error", err),
     onSuccess: (data) => {
 		setInstructorsList(data)
     },
@@ -37,7 +35,6 @@ export default function CourseInstructors() {
 	const { isLoading: requestsLoading } = useQuery({
 		queryKey: ["getRequests", id],
 		queryFn: () => http.get(`/instructors/requests/${id}`).then((r) => r.data),
-		onError: (err) => console.log("error", err),
     onSuccess: (data) => {
 		setRequestsList(data)
     },

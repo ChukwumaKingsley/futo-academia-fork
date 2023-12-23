@@ -26,7 +26,6 @@ export default function CourseStudents() {
         search: filterParams.search,
         level: filterParams.level
     }}).then((r) => r.data),
-		onError: (err) => console.log("error", err),
     onSuccess: (data) => {
       setData(data);
     },

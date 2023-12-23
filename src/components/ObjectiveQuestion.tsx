@@ -136,7 +136,6 @@ export default function ObjectiveQuestion() {
 				return await http.delete(`/assessments/${assessment_id}`);
 			},
 			onSuccess: () => {navigate(`/courses/${id}/assessments`)},
-			onError: (error: any) => {console.log(error)}
 		});
 
 	return (
@@ -222,7 +221,6 @@ export default function ObjectiveQuestion() {
 								variant="solid"
 								isLoading={questionMutations.isLoading}
 								onClick={() => {
-									console.log("Question Args", questionArr);
 									questionMutations.mutate(questionArr);
 								}}
 								my={2}

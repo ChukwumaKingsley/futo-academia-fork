@@ -26,7 +26,6 @@ function EnrollmentRequests({id}: any) {
         search: filterParams.search,
         level: filterParams.level
     }}).then((r) => r.data),
-		onError: (err) => console.log("error", err),
     onSuccess: (data) => {
       setData(data);
     },
@@ -42,7 +41,6 @@ function EnrollmentRequests({id}: any) {
   
   const approveEnrollmentMutation = useApproveEnrollment()
   const handleRequestAccept = (index: number) => {
-    console.log(index)
     approveEnrollmentMutation.mutate({course_code: id, reg_num: data[index].reg_num})
     data.splice(index, 1)
   }
@@ -56,7 +54,6 @@ function EnrollmentRequests({id}: any) {
 
   const deleteEnrollmentMutation = useDeleteEnrollment()
   const handleRequestDeny = (index: number) => {
-    console.log(index)
     deleteEnrollmentMutation.mutate({course_code: id, reg_num: data[index].reg_num})
     data.splice(index, 1)
   }
