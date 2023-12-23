@@ -6,7 +6,8 @@ axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem(
 
 const http = axios.create({
 	// baseURL: "https://smart-school-chimaobi-1fc5a20bc992.herokuapp.com",
-	baseURL: "http://127.0.0.1:8000",
+	// baseURL: "http://127.0.0.1:8000",
+	baseURL: "https://autograding.onrender.com",
 	timeout: 10000,
 });
 
