@@ -161,7 +161,7 @@ export default function LecturerHome() {
 										color={"white"}
 										colorScheme={"brand"}
 										as={Button}
-										leftIcon={<ChevronDownIcon />}
+										rightIcon={<ChevronDownIcon />}
 									>
 										{searchParams.level ? `${searchParams.level} Level` : "All Levels"}
 									</MenuButton>
@@ -220,7 +220,7 @@ export default function LecturerHome() {
 				alignItems={"center"}
 				columnGap={"2"}
 				as={NavLink}
-				to="/lecturer/courses-upload"
+				to="/courses-upload"
 			>
 				<Text>Create</Text>
 				<AddIcon borderRadius="full" boxSize={"8"} color={"blue.400"} />

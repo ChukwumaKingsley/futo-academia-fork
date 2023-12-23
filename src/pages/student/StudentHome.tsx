@@ -153,7 +153,7 @@ export default function StudentHome() {
 										color={"white"}
 										colorScheme={"brand"}
 										as={Button}
-										leftIcon={<FilterIcon />}
+										rightIcon={<FilterIcon />}
 									>
 										{searchParams.level ? `${searchParams.level} Level` : "All Levels"}
 									</MenuButton>
