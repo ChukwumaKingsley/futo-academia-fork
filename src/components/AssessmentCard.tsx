@@ -312,26 +312,26 @@ export default function AssessmentCard({ is_active, title, id, idx, is_marked, i
 							leastDestructiveRef={cancelRef} 
 							isOpen={alertIsOpen} 
 							onClose={alertOnClose}
-								>
-									<AlertDialogOverlay>
-										<AlertDialogContent>
-											<AlertDialogHeader>
-												Delete Assessment
-											</AlertDialogHeader>
-											<AlertDialogBody>
-												Are you sure? This action cannot be undone!
-											</AlertDialogBody>
-											<AlertDialogFooter gap={2}>
-												<Button ref={cancelRef} onClick={alertOnClose} size={"md"}>
-													Cancel
-												</Button>
-												<Button colorScheme="red" onClick={()=>{deleteAssessment.mutate({assessment_id: data?.id})}} size={"md"}>
-													Delete
-												</Button>
-											</AlertDialogFooter>
-										</AlertDialogContent>
-									</AlertDialogOverlay>
-								</AlertDialog>
+							>
+								<AlertDialogOverlay>
+									<AlertDialogContent>
+										<AlertDialogHeader>
+											Delete Assessment
+										</AlertDialogHeader>
+										<AlertDialogBody>
+											Are you sure? This action cannot be undone!
+										</AlertDialogBody>
+										<AlertDialogFooter gap={2}>
+											<Button ref={cancelRef} onClick={alertOnClose} size={"md"}>
+												Cancel
+											</Button>
+											<Button colorScheme="red" onClick={()=>{deleteAssessment.mutate({assessment_id: data?.id})}} size={"md"}>
+												Delete
+											</Button>
+										</AlertDialogFooter>
+									</AlertDialogContent>
+								</AlertDialogOverlay>
+							</AlertDialog>
 						}
 					</Box>
 				</Box>
