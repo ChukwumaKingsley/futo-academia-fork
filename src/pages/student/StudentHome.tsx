@@ -62,8 +62,8 @@ export default function StudentHome() {
 	return (
 		<StudentDashboardLayout>
 			<Box backgroundImage={`url(${BackgroundImage})`} >
-				<Container maxW={"container.xl"} maxH={"20%"}>
-					<Grid height={{base: "25vh", md: "30vh"}} rowGap={6}>
+				<Container maxW={"container.xl"}  maxH={"max-content"} p={{base: 3, md: 5}}>
+					<Grid height={"max-content"} rowGap={6}>
 						<Box alignSelf={"end"}>
 							<Heading textAlign={"center"} color={"brand.500"} fontSize={{base: "1.5rem", md: "3rem"}}>
 								Create Assessments with Ease
@@ -96,7 +96,7 @@ export default function StudentHome() {
 							<Box gridArea={"faculty"}>
 								<Menu>
 									<MenuButton style={{ width: "100px" }} size={{ base: "sm", sm: "md" }} variant={"outline"} colorScheme={"brand"} color={"white"} as={Button} rightIcon={<ChevronDownIcon />}>
-										Faculty
+										{searchParams.faculty ? `${searchParams.faculty}` : "All Schools"}
 									</MenuButton>
 									<MenuList>
 										<MenuItem value="" justifyContent={"center"} onClick={() => handleFacultyChange("")}>
@@ -137,7 +137,6 @@ export default function StudentHome() {
 										</MenuItem>
 									</MenuList>
 								</Menu>
-								<Text textAlign={"center"} textColor={"white"} fontSize={{base: "0.9rem", md: "1.2rem"}}>{searchParams.faculty ? searchParams.faculty : "All Faculties"}</Text>
 							</Box>
 
 							<InputGroup gridArea={"search"} backgroundColor={"white"} rounded={"md"} width={{ base: "100%", lg: "300px" }}>
@@ -156,7 +155,7 @@ export default function StudentHome() {
 										as={Button}
 										leftIcon={<FilterIcon />}
 									>
-										Level
+										{searchParams.level ? `${searchParams.level} Level` : "All Levels"}
 									</MenuButton>
 									<MenuList>
 										<MenuItem justifyContent={"center"} onClick={() => handleLevelChange(null)}>
@@ -179,7 +178,6 @@ export default function StudentHome() {
 										</MenuItem>
 									</MenuList>
 								</Menu>
-								<Text textAlign={"center"} textColor={"white"} fontSize={{base: "0.9rem", md: "1.2rem"}}>{searchParams.level ? searchParams.level + " Level" : "All Levels"}</Text>
 							</Box>
 						</Grid>
 					</Grid>

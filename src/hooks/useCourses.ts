@@ -43,6 +43,7 @@ export function useCreateCourse() {
 }
 
 export function useUploadCourseCover(courseCreated = false) {
+	const toast = useToast()
 	return useMutation({
 		mutationKey: ["useUploadCourseCover", courseCreated],
 		mutationFn: async ({ course_code, file }: any) => {
@@ -50,7 +51,14 @@ export function useUploadCourseCover(courseCreated = false) {
 				const formData = new FormData();
 				formData.append("file", file);
 				await http.put(`/courses/${course_code}/photo`, formData);
-			} catch (error) {
+			} catch (error: any) {
+				if (error?.response) {
+					toast({
+						status: "error",
+						description: error.response.data.detail,
+						position: "top"
+					})
+				}
 				return error;
 			}
 		},
