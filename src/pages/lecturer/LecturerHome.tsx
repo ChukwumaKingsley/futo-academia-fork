@@ -61,8 +61,8 @@ export default function LecturerHome() {
 
 	return (
 		<LecturerDashboardLayout>
-			<Box backgroundImage={`url(${BackgroundImage})`} >
-				<Container maxW={"container.xl"} maxH={"max-content"}>
+			<Box backgroundImage={`url(${BackgroundImage})`}>
+				<Container maxW={"container.xl"} maxH={"max-content"} p={{base: 3, md: 5}}>
 					<Grid height={"max-content"} rowGap={6}>
 						<Box alignSelf={"end"}>
 							<Heading textAlign={"center"} color={"brand.500"} fontSize={{base: "1.5rem", md: "3rem"}}>
