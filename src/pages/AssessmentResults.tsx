@@ -175,7 +175,11 @@ export const AssessmentResults = () => {
                     </Thead>
                     <Tbody>
                             {results && results?.length > 0 && results?.map((result: any, index: number) =>
-                            <Tr key={index}>
+                            <Tr key={index}
+                                cursor={"pointer"}
+                                _hover={{ transform: "scale(0.995)", transition: "transform 0.2s ease-in-out" }}
+                                onClick={() => navigate(`/courses/${id}/assessment/result/${idx}/${result?.reg_num}`)}
+                            >
                                 <Td>{index+1}</Td>
                                 <Td maxW={"fit-content"}><Avatar src={result?.photo_url} name={result?.name} size={"md"}/></Td>
                                 <Td alignItems={"center"}>

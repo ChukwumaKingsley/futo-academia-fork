@@ -22,7 +22,8 @@ export default function ExamResult() {
 
 	const { data, isLoading } = useQuery({
 		queryKey: ["getRes", id],
-		queryFn: () => http.get(`assessments/${id}/stu_results`),
+		queryFn: () => http.get(`assessments/${id}/student_result/${user?.id}`),
+		enabled: !user.isLoading && !user.is_instructor,
 	});
 
 	const { data: examData } = useQuery({
@@ -50,10 +51,10 @@ export default function ExamResult() {
 			<Box bgColor={"#f3f6ff"} w="100%" minH={"100vh"} p={6} px={50}>
 				<>
 					<Text textAlign={"center"} color="#232455" fontWeight={"bold"}>
-						Federal University of Technology Owerri <br /> FACULTY OF {examData?.faculty} <br /> {examData?.semester === 1 ? "HARMATTAN" : "RAIN"} SEMESTER EXAMINATION (2022/2023)
+						Federal University of Technology Owerri <br /> FACULTY OF {examData?.faculty} <br /> {examData?.semester === 1 ? "HARMATTAN" : "RAIN"} SEMESTER {data?.data?.assessment_type.toUpperCase()} (2022/2023)
 					</Text>
 					<Text>
-						COURSE TITLE: {data?.data?.title.toString().toUpperCase()} || {examData?.title.toString().toUpperCase()}
+						<b>COURSE TITLE: </b>{examData?.title.toString().toUpperCase()}
 					</Text>
 					<Flex justifyContent={"space-between"}>
 						<Text my={1}>
@@ -65,6 +66,9 @@ export default function ExamResult() {
 							<b>DATE:</b> {data?.data?.start_date.split("T")[0]}
 						</Text>
 					</Flex>
+					<Text my={1} textAlign={"center"}>
+						<b>{data?.data?.title.toString().toUpperCase()}</b>
+					</Text>
 					<Flex justifyContent={"space-between"}>
 						<Text my={1}>
 							{" "}
@@ -73,7 +77,9 @@ export default function ExamResult() {
 						<Text my={1}>
 							<b>ALLOCATED TIME:</b> {data?.data?.duration} MINUTES
 						</Text>
+						
 					</Flex>
+					
 				<Box>
 					<Flex my={3} flexDir={"column"}>
 						<Box width={"100%"} bg={"whiteAlpha.900"} p={5}>
