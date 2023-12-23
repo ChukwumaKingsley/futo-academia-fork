@@ -1,6 +1,6 @@
 import { Heading, Text, Menu, MenuButton, MenuList, MenuItem, Flex, Button, Input, InputGroup, InputLeftAddon, Box, Grid, Container } from "@chakra-ui/react";
 import { AddIcon, ChevronDownIcon } from "@chakra-ui/icons";
-import { FilterIcon, SearchIcon } from "../../components/Icons";
+import { SearchIcon } from "../../components/Icons";
 import BackgroundImage from "../../assets/bg-images/students.png";
 import { useEffect, useState } from "react";
 import { NavLink, Outlet, Route, Routes, useLocation } from "react-router-dom";
@@ -95,12 +95,20 @@ export default function LecturerHome() {
 						>
 							<Box gridArea={"faculty"}>
 								<Menu>
-									<MenuButton style={{ width: "100px" }} size={{ base: "sm", sm: "md" }} variant={"outline"} colorScheme={"brand"} color={"white"} as={Button} rightIcon={<ChevronDownIcon />}>
-										Faculty
+									<MenuButton 
+										style={{ width: "100px" }} 
+										size={{ base: "sm", sm: "md" }} 
+										variant={"outline"} 
+										colorScheme={"brand"} 
+										color={"white"} 
+										as={Button} 
+										rightIcon={<ChevronDownIcon />}
+									>
+										{searchParams.faculty ? `${searchParams.faculty}` : "All Schools"}
 									</MenuButton>
 									<MenuList>
 										<MenuItem value="" justifyContent={"center"} onClick={() => handleFacultyChange("")}>
-											All Faculties
+											All Schools
 										</MenuItem>
 										<MenuItem value="SAAT" justifyContent={"center"} onClick={() => handleFacultyChange("SAAT")}>
 											SAAT
@@ -137,7 +145,6 @@ export default function LecturerHome() {
 										</MenuItem>
 									</MenuList>
 								</Menu>
-								<Text textAlign={"center"} textColor={"white"} fontSize={{base: "0.9rem", md: "1.2rem"}}>{searchParams.faculty ? searchParams.faculty : "All Faculties"}</Text>
 							</Box>
 
 							<InputGroup gridArea={"search"} backgroundColor={"white"} rounded={"md"} width={{ base: "100%", lg: "300px" }}>
@@ -148,15 +155,15 @@ export default function LecturerHome() {
 							<Box gridArea={"level"}>
 								<Menu>
 									<MenuButton
-										style={{ width: "100px", height: "50px"}}
+										style={{ width: "100px"}}
 										size={{ base: "sm", sm: "md" }}
 										variant={"outline"}
 										color={"white"}
 										colorScheme={"brand"}
 										as={Button}
-										leftIcon={<FilterIcon />}
+										leftIcon={<ChevronDownIcon />}
 									>
-										Level
+										{searchParams.level ? `${searchParams.level} Level` : "All Levels"}
 									</MenuButton>
 									<MenuList>
 										<MenuItem justifyContent={"center"} onClick={() => handleLevelChange(null)}>
@@ -179,7 +186,6 @@ export default function LecturerHome() {
 										</MenuItem>
 									</MenuList>
 								</Menu>
-								<Text textAlign={"center"} textColor={"white"} fontSize={{base: "0.9rem", md: "1.2rem"}}>{searchParams.level ? searchParams.level + " Level" : "All Levels"}</Text>
 							</Box>
 						</Grid>
 					</Grid>
