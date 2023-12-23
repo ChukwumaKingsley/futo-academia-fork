@@ -62,8 +62,8 @@ export default function LecturerHome() {
 	return (
 		<LecturerDashboardLayout>
 			<Box backgroundImage={`url(${BackgroundImage})`} >
-				<Container maxW={"container.xl"} maxH={"20%"}>
-					<Grid height={{base: "25vh", md: "30vh"}} rowGap={6}>
+				<Container maxW={"container.xl"} maxH={"max-content"}>
+					<Grid height={"max-content"} rowGap={6}>
 						<Box alignSelf={"end"}>
 							<Heading textAlign={"center"} color={"brand.500"} fontSize={{base: "1.5rem", md: "3rem"}}>
 								Create and Grade Assessments with Ease
