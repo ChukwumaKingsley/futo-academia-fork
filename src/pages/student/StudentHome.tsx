@@ -1,6 +1,6 @@
 import { Heading, Text, Menu, MenuButton, MenuList, MenuItem, Flex, Button, Input, InputGroup, InputLeftAddon, Box, Grid, Container } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
-import { FilterIcon, SearchIcon } from "../../components/Icons";
+import { SearchIcon } from "../../components/Icons";
 import BackgroundImage from "../../assets/bg-images/students.png";
 import StudentDashboardLayout from "../../layout/StudentDashboardLayout";
 import { useEffect, useState } from "react";
@@ -95,7 +95,7 @@ export default function StudentHome() {
 						>
 							<Box gridArea={"faculty"}>
 								<Menu>
-									<MenuButton style={{ width: "100px" }} size={{ base: "sm", sm: "md" }} variant={"outline"} colorScheme={"brand"} color={"white"} as={Button} rightIcon={<ChevronDownIcon />}>
+									<MenuButton style={{ width: "100px" }} size={{ base: "sm", sm: "md" }} variant={"outline"} colorScheme={"brand"} color={"white"} as={Button} rightIcon={<ChevronDownIcon />} width={"max-content"}>
 										{searchParams.faculty ? `${searchParams.faculty}` : "All Schools"}
 									</MenuButton>
 									<MenuList>
@@ -153,7 +153,7 @@ export default function StudentHome() {
 										color={"white"}
 										colorScheme={"brand"}
 										as={Button}
-										rightIcon={<FilterIcon />}
+										rightIcon={<ChevronDownIcon />}
 									>
 										{searchParams.level ? `${searchParams.level} Level` : "All Levels"}
 									</MenuButton>

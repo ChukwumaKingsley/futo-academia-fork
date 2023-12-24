@@ -103,6 +103,7 @@ export default function LecturerHome() {
 										color={"white"} 
 										as={Button} 
 										rightIcon={<ChevronDownIcon />}
+										width={"max-content"}
 									>
 										{searchParams.faculty ? `${searchParams.faculty}` : "All Schools"}
 									</MenuButton>
@@ -162,6 +163,7 @@ export default function LecturerHome() {
 										colorScheme={"brand"}
 										as={Button}
 										rightIcon={<ChevronDownIcon />}
+										width={"max-content"}
 									>
 										{searchParams.level ? `${searchParams.level} Level` : "All Levels"}
 									</MenuButton>
