@@ -63,7 +63,7 @@ function CourseHeader({ course_code, title, description, units, course_photo_url
 						</Button>
 					</Flex>
 					}
-					{user?.is_instructor && 
+					{user?.is_instructor && !is_course_coordinator &&
 					<Flex mt={4} fontSize={"sm"}>
 						<Button 
 							size="sm" 

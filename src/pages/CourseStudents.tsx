@@ -1,6 +1,6 @@
 import { NavLink, Outlet, Route, Routes, useLocation, useParams } from "react-router-dom";
 import CourseTabs from "../layout/CourseTabs";
-import { Text, Flex, Center, Grid, Input, InputGroup, InputLeftAddon, Select } from "@chakra-ui/react";
+import { Text, Flex, Center, Grid, Input, InputGroup, InputLeftAddon, Select, Avatar } from "@chakra-ui/react";
 import Enrolled, { CourseStudent } from "./Enrolled";
 import EnrollmentRequests from "./EnrollmentRequests";
 import { useUser } from "../hooks/useUser";
@@ -93,16 +93,20 @@ export default function CourseStudents() {
 						<option value={500}>500</option>
 						</Select>
 					</Center>
-					<Grid templateColumns={"0.8fr 3fr 2fr 1fr 1fr"} border={"none"} fontSize={{base: "xs", md: "md"}} columnGap={1} bgColor={"#343680"}>
+					<Grid templateColumns={"0.5fr 0.5fr 3fr 2fr 1fr 1fr"} border={"none"} fontSize={{base: "xs", md: "md"}} columnGap={1} bgColor={"#343680"}>
 						<Text textColor={"white"} border={"none"} py={3} pl={1}>S/N</Text>
+						<Text></Text>
 						<Text textColor={"white"} border={"none"} py={3}>Name</Text>
 						<Text textColor={"white"} border={"none"} py={3}>Reg. No.</Text>
 						<Text textColor={"white"} border={"none"} py={3}>Dept</Text>
 						<Text textColor={"white"} border={"none"} py={3}>Level</Text>
 					</Grid>
 					{data?.map((student: any, index: number) => 
-						<Grid templateColumns={"0.8fr 3fr 2fr 1fr 1fr"} border={"none"} fontSize={{base: "xs", md: "md"}} key={student?.reg_num} minH={"40px"} bg={index%2 === 0 ? "#E0E0E066" : "unset"} alignContent={"center"}>
+						<Grid templateColumns={"0.5fr 0.5fr 3fr 2fr 1fr 1fr"} border={"none"} fontSize={{base: "xs", md: "md"}} key={student?.reg_num} minH={"40px"} bg={index%2 === 0 ? "#E0E0E066" : "unset"} alignItems={"center"} columnGap={1}>
 						<Text py={3} pl={1}>{index+1}</Text>
+						<Flex>
+							<Avatar src={student?.photo_url} name={student?.name} size={"sm"} />
+						</Flex>
 						<Text py={3} overflowX={"scroll"}>{student?.name}</Text>
 						<Text py={3} overflowX={"scroll"}>{student?.reg_num}</Text>
 						<Text py={3} overflowX={"scroll"}>{student?.department}</Text>

@@ -28,7 +28,7 @@ export default function AssessmentCard({ is_active, title, id, idx, is_marked, i
 			return http.post(`/marks/${id}/`);
 		},
 		onSuccess: () => {
-			toast({ title: "Sucessfully mark", variant: "solid" });
+			toast({ title: "Sucessfully marked", variant: "solid" });
 			queryClient.invalidateQueries({ queryKey: ["getassesments"] });
 		},
 		onError: (err: any) => {

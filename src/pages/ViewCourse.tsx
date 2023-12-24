@@ -126,12 +126,12 @@ export default function ViewCourse() {
 			align: "right",
 		},
 		{
-			title: "Min",
+			title: "Min. score",
 			key: "minimum",
 			align: "right",
 		},
 		{
-			title: "Max",
+			title: "Max. score",
 			key: "maximum",
 			align: "right",
 		},
@@ -363,9 +363,9 @@ export default function ViewCourse() {
 									<Td maxW={"200px"} overflowX={"hidden"}>{assessment?.title}</Td>
 									<Td>{assessment?.type}</Td>
 									<Td textAlign={"right"}>{assessment?.num_students} ({assessment?.percentage_submissions})</Td>
-									<Td textAlign={"right"}>{assessment?.avg_score} ({assessment?.avg_score_percentage})</Td>
-									<Td textAlign={"right"}>{assessment?.lowest_score}</Td>
-									<Td textAlign={"right"}>{assessment?.highest_score}</Td>
+									<Td textAlign={"right"}>{assessment?.avg_score}/{assessment?.total_possible_score} ({assessment?.avg_score_percentage})</Td>
+									<Td textAlign={"right"}>{assessment?.lowest_score}/{assessment?.total_possible_score}</Td>
+									<Td textAlign={"right"}>{assessment?.highest_score}/{assessment?.total_possible_score}</Td>
 									<Td textAlign={"right"}>{assessment?.avg_time}</Td>
 								</Tr>):
 								<Tr>
@@ -416,7 +416,7 @@ export default function ViewCourse() {
 									<Td>{index+1}</Td>
 									<Td maxW={"200px"} overflowX={"hidden"}>{assessment?.title}</Td>
 									<Td>{assessment?.type}</Td>
-									<Td textAlign={"right"}>{assessment?.total_score} ({assessment?.total_percentage}%)</Td>
+									<Td textAlign={"right"}>{assessment?.total_score}/{assessment?.total_possible_score} ({assessment?.total_percentage}%)</Td>
 									<Td textAlign={"right"}>{assessment?.duration}</Td>
 								</Tr>):
 								<Tr>

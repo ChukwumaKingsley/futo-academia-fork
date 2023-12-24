@@ -105,7 +105,7 @@ function EnrollmentRequests({id}: any) {
           Deny all
         </Button>
       </Flex>
-      <Grid templateColumns={"0.5fr 0.5fr 2.5fr 1.8fr 1fr 1fr 0.8fr 0.8fr"} border={"none"} fontSize={{base: "xs", md: "md"}}  bgColor={"#343680"}>
+      <Grid templateColumns={"0.5fr 0.5fr 2.5fr 1.8fr 1fr 1fr 0.8fr 0.8fr"} border={"none"} fontSize={{base: "xs", md: "md"}}  bgColor={"#343680"} columnGap={1}>
         <Text textColor={"white"} border={"none"} py={3} pl={1}>S/N</Text>
         <Text textColor={"white"} border={"none"} py={3} pl={1}></Text>
         <Text textColor={"white"}border={"none"} py={3}>Name</Text>
@@ -116,21 +116,25 @@ function EnrollmentRequests({id}: any) {
         <Text border={"none"}></Text>
       </Grid>
       {data?.map((student: any, index: number) => 
-        <Grid templateColumns={"0.5fr 0.5fr 2.5fr 1.8fr 1fr 1fr 0.8fr 0.8fr"} border={"none"} fontSize={{base: "xs", md: "md"}} key={student?.reg_num} minH={"40px"} bg={index%2 === 0 ? "#E0E0E066" : "unset"} alignContent={"center"} justifyContent={"center"} p={{base: 1, md: 3}}>
+        <Grid templateColumns={"0.5fr 0.5fr 2.5fr 1.8fr 1fr 1fr 0.8fr 0.8fr"} border={"none"} fontSize={{base: "xs", md: "md"}} key={student?.reg_num} minH={"40px"} bg={index%2 === 0 ? "#E0E0E066" : "unset"} alignItems={"center"} justifyContent={"center"} p={{base: 1, md: 3}} columnGap={1}>
           <Text py={3} pl={1}>{index+1}</Text>
           <Flex><Avatar src={student?.photo_url} name={student?.name} size={{base: "sm", md: "md"}} /></Flex>
           <Text py={3}>{student?.name}</Text>
           <Text py={3} overflowX={"auto"}>{student?.reg_num}</Text>
           <Text py={3} overflowX={"auto"}>{student?.department}</Text>
           <Text py={3}>{student?.level}</Text>
-          <Text py={3} textAlign={"center"} textColor={"green"} cursor={"pointer"} onClick={() => {handleRequestAccept(index)}}>
-            <Text display={{base: "flex", lg: "none"}} ><FontAwesomeIcon icon={faCheck}/></Text>
+          <Flex textAlign={"center"} textColor={"green"} cursor={"pointer"} py={3} onClick={() => {handleRequestAccept(index)}}>
+              <Text display={{base: "flex", lg: "none"}} >
+                <FontAwesomeIcon icon={faCheck}/>
+              </Text>
             <Text display={{base: "none", lg: "flex"}} >Accept</Text>
-          </Text>
-          <Text py={3} textAlign={"center"} textColor={"red"} cursor={"pointer"}onClick={() => {handleRequestDeny(index)}}>
-          <Text display={{base: "flex", lg: "none"}} ><FontAwesomeIcon icon={faTrash}/></Text>
+          </Flex>
+          <Flex cursor={"pointer"}onClick={() => {handleRequestDeny(index)}} textColor={"red"} py={3}>
+            <Text display={{base: "flex", lg: "none"}} >
+              <FontAwesomeIcon icon={faTrash}/>
+            </Text>
             <Text display={{base: "none", lg: "flex"}} >Deny</Text>
-          </Text>
+          </Flex>
 
         </Grid>
         )}
