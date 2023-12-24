@@ -244,9 +244,9 @@ export default function ObjectiveQuestion() {
 			</Box>
 
 			<Center columnGap={3} mt={10}>
-				<Button variant={"outline"} colorScheme="blue" onClick={() => {navigate(`/courses/${id}/assessments`)}}minWidth={"min-content"}>Done</Button>
-				<Button variant={"solid"} colorScheme="blue" onClick={() => uploadMutation.mutate(idx)} isLoading={uploadMutation.isLoading} minWidth={"min-content"}>Make Active</Button>
-				<Button variant={"solid"} colorScheme="red" onClick={alertOnOpen} minWidth={"min-content"}>Delete assessment</Button>
+				<Button variant={"ghost"} colorScheme="blue" onClick={() => {navigate(`/courses/${id}/assessments`)}}minWidth={"min-content"}>Done</Button>
+				<Button variant={"ghost"} colorScheme="blue" onClick={() => uploadMutation.mutate(idx)} isLoading={uploadMutation.isLoading} minWidth={"min-content"}>Make Active</Button>
+				<Button variant={"ghost"} colorScheme="red" onClick={alertOnOpen} minWidth={"min-content"}>Delete assessment</Button>
 			</Center>
 
 			<AlertDialog 

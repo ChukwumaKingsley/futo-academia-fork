@@ -95,7 +95,7 @@ export const AssessmentResultsStudent = () => {
                     </Flex>
                     <Flex flexDir={"column"} alignItems={"center"}>
                         <Text textColor={"blue"} textAlign={"center"}>SUBMISSION DATE/TIME</Text>
-                        <Text textAlign={"center"}>{new Date(stats?.data?.start_datetime).toUTCString()}</Text>
+                        <Text textAlign={"center"}>{new Date(stats?.data?.end_datetime).toUTCString()}</Text>
                     </Flex>
 
                 </Flex>

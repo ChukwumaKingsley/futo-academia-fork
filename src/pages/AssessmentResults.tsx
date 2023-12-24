@@ -186,8 +186,8 @@ export const AssessmentResults = () => {
                                 </Td>
                                 <Td textAlign={"right"}>{result?.reg_num}</Td>
                                 <Td textAlign={"right"}>{result?.total}</Td>
-                                <Td textAlign={"right"}>{result?.start_datetime}</Td>
-                                <Td textAlign={"right"}>{result?.end_datetime}</Td>
+                                <Td textAlign={"right"}>{new Date(result?.start_datetime).toUTCString()}</Td>
+                                <Td textAlign={"right"}>{new Date(result?.end_datetime).toUTCString()}</Td>
                                 <Td textAlign={"right"}>{result?.assessment_time}</Td>
                             </Tr>
                             )}

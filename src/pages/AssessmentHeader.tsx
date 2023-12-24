@@ -128,15 +128,12 @@ export default function AssessmentHeader() {
 	
 	return (
 		<Box boxShadow={"md"} p={5} mt={1} display={"flex"} flexDir={"column"} alignItems={"center"} bg={'white'} marginTop={5}>
-			<Flex alignItems={"center"} p={1} gap={4} borderRadius="8px">
-				<Text fontSize="24px" color="#585AD4" textAlign={"center"} fontWeight="bold">
+			<Flex alignItems={"center"} p={1} gap={1} borderRadius="8px" flexDir={"column"}>
+				<Text fontSize="24px" color="#585AD4" textAlign={"center"} fontWeight="bold" p={0}>
 					{examSetUp?.title}
 				</Text>
 				<Text bg={"#696CFF"} borderRadius={"full"} color="#FFF" px={2} minWidth={"min-content"} fontSize={"xs"}>{examSetUp?.assessment_type}</Text>
 			</Flex>
-			<Text fontSize="20px" color="#585AD4" textAlign={"center"} fontWeight="bold" mb={2}>
-				({examSetUp?.course_id})
-			</Text>
 			<Divider />
 			<Grid templateColumns={"1fr 3fr"} columnGap={3} alignSelf={"start"}mt={2}>
 				<Text color={"#585ada"}>Begins:</Text>
