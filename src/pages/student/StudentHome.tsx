@@ -95,7 +95,16 @@ export default function StudentHome() {
 						>
 							<Box gridArea={"faculty"}>
 								<Menu>
-									<MenuButton style={{ width: "100px" }} size={{ base: "sm", sm: "md" }} variant={"outline"} colorScheme={"brand"} color={"white"} as={Button} rightIcon={<ChevronDownIcon />} width={"max-content"}>
+									<MenuButton 
+										size={"lg"}
+										height={"max-content"}
+										py={2}
+										variant={"outline"}
+										color={"white"}
+										colorScheme={"brand"}
+										as={Button}
+										rightIcon={<ChevronDownIcon />}
+									>
 										{searchParams.faculty ? `${searchParams.faculty}` : "All Schools"}
 									</MenuButton>
 									<MenuList>
@@ -147,8 +156,9 @@ export default function StudentHome() {
 							<Box gridArea={"level"}>
 								<Menu>
 									<MenuButton
-										style={{ width: "100px", height: "50px"}}
-										size={{ base: "sm", sm: "md" }}
+										size={"lg"}
+										height={"max-content"}
+										py={2}
 										variant={"outline"}
 										color={"white"}
 										colorScheme={"brand"}

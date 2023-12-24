@@ -96,14 +96,14 @@ export default function LecturerHome() {
 							<Box gridArea={"faculty"}>
 								<Menu>
 									<MenuButton 
-										style={{ width: "100px" }} 
-										size={{ base: "sm", sm: "md" }} 
-										variant={"outline"} 
-										colorScheme={"brand"} 
-										color={"white"} 
-										as={Button} 
+										size={"lg"}
+										height={"max-content"}
+										py={2}
+										variant={"outline"}
+										color={"white"}
+										colorScheme={"brand"}
+										as={Button}
 										rightIcon={<ChevronDownIcon />}
-										width={"max-content"}
 									>
 										{searchParams.faculty ? `${searchParams.faculty}` : "All Schools"}
 									</MenuButton>
@@ -156,14 +156,14 @@ export default function LecturerHome() {
 							<Box gridArea={"level"}>
 								<Menu>
 									<MenuButton
-										style={{ width: "100px"}}
-										size={{ base: "sm", sm: "md" }}
+										size={"lg"}
+										height={"max-content"}
+										py={2}
 										variant={"outline"}
 										color={"white"}
 										colorScheme={"brand"}
 										as={Button}
 										rightIcon={<ChevronDownIcon />}
-										width={"max-content"}
 									>
 										{searchParams.level ? `${searchParams.level} Level` : "All Levels"}
 									</MenuButton>
