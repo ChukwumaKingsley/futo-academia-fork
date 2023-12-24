@@ -100,8 +100,8 @@ const UploadCourse = () => {
 	useEffect(() => {
 		if (createCourseMutation.isSuccess) {
 			coursePhotoMutation.mutate({ course_code: courseInfo.code, file: courseInfo.coverImage });
-			navigate(`/lecturer/courses/${courseInfo.code}`)
-			
+			navigate(`/courses/${courseInfo.code}`)
+
 			if (courseInfo.classList) {
 				enrollStudentMutation.mutate({
 				file: courseInfo.classList,
