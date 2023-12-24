@@ -40,7 +40,7 @@ export default function StudentDashboardLayout({ children }: Props) {
 										<HamburgerIcon />
 									</MenuButton>
 									<MenuList>
-										<MenuItem justifyContent={"center"} borderBottomWidth={"1"} as={NavLink} to="/profile">
+										<MenuItem justifyContent={"center"} borderBottomWidth={"1"} as={NavLink} to="/student-profile">
 											My Profile
 										</MenuItem>
 										<MenuItem justifyContent={"center"} borderBottomWidth={"1"} as={NavLink} to="/student/my-courses">
