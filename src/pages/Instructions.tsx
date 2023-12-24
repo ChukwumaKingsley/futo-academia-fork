@@ -98,9 +98,9 @@ export default function Instructions({idx}: {idx: string | undefined}) {
 						<Heading as={"h4"} size={"md"} my={5}>
 							Instructions
 						</Heading>
-					<Box width={"100%"} bg={"whiteAlpha.900"} p={5}>
+					<Box width={"100%"} bg={"whiteAlpha.900"} p={5}  borderRadius="8px">
 						{instructionsObject?.length === 0 ? 
-							<Text><i>No instructions.</i></Text>
+							<Text textAlign={"center"} color="#585AD4" ><i>No instructions.</i></Text>
 							: 
 							<UnorderedList>
 								{instructionsObject?.map((object, index) => <ListItem key={index} my={2} boxShadow={"sm"}>
@@ -115,11 +115,11 @@ export default function Instructions({idx}: {idx: string | undefined}) {
 							</UnorderedList>
 						}
 					<Box width="100%" as="form" onSubmit={handleInstructionInput}>
-						<FormControl display={"flex"} alignItems={"center"} gap={4}>
-							<FormLabel fontWeight="bold" mt={8}>
+						<FormControl display={"flex"} alignItems={"center"} gap={1} flexDir={"column"}>
+							<FormLabel mt={8} alignSelf={"start"} fontStyle={"italic"} textColor={"black"}>
+								New Instruction
 							</FormLabel>
 							<Textarea
-								mt={4}
 								height={"1rem"}
 								placeholder="Type instruction"
 								value={instruction.instruction}

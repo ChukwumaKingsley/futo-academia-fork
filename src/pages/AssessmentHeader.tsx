@@ -127,8 +127,8 @@ export default function AssessmentHeader() {
 
 	
 	return (
-		<Box boxShadow={"md"} p={5} mt={1} display={"flex"} flexDir={"column"} alignItems={"center"} bg={'white'}>
-			<Flex alignItems={"center"} p={1} gap={4}>
+		<Box boxShadow={"md"} p={5} mt={1} display={"flex"} flexDir={"column"} alignItems={"center"} bg={'white'} marginTop={5}>
+			<Flex alignItems={"center"} p={1} gap={4} borderRadius="8px">
 				<Text fontSize="24px" color="#585AD4" textAlign={"center"} fontWeight="bold">
 					{examSetUp?.title}
 				</Text>

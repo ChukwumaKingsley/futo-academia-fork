@@ -146,9 +146,9 @@ export default function ObjectiveQuestion() {
 						Questions
 					</Heading>
 				</Flex>
-				<Flex w="100%" justifyContent="space-around">
+				<Flex w="100%" justifyContent="space-around" flexDir={"column"} mt={2}>
 					{answerData?.questions.length === 0 && 
-					<Text>No Questions</Text>}
+					<Text textAlign={"center"} color="#585AD4" bg={"white"} p={4} borderRadius="8px">No Questions</Text>}
 					<Box width="100%">
 						{answerData?.questions.map((x: any, i: number) => (
 							<ObjectiveAnswer {...x} index={i + 1} key={i} />
