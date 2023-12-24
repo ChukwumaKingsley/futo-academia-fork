@@ -136,12 +136,16 @@ export default function Assignments() {
 		},
 	});
 
-	if (isLoading) return <Loader />;
+	if (isLoading) return (
+		<CourseTabs>
+			<Loader  height={"100px"}/>
+		</CourseTabs>);
+
 	return (
 		<CourseTabs>
 			{user?.is_instructor && <Flex justifyContent={"end"} mt={"20px"} alignItems={"center"}>
 				<Box onClick={() => {onOpen()}} fontSize={"16px"} display="flex" alignItems={"center"} cursor={"pointer"}>
-				<FontAwesomeIcon icon={faPlusCircle} size="2x" color="#585AD4" fontSize={"16px"}/>
+				<FontAwesomeIcon icon={faPlusCircle} size="xl" color="#585AD4" fontSize={"16px"}/>
 				<Text fontSize={"16px"} color="blue" mx={"10px"}>
 					Create Assessment
 				</Text>
@@ -258,7 +262,7 @@ export default function Assignments() {
 							color={"#343780"}
 							_expanded={{ bg: '#343680', color: 'white' }}
 						>
-							<Text fontWeight={"bold"} fontSize={"2xl"}>
+							<Text fontWeight={"bold"} fontSize={"lg"}>
 								Drafts
 							</Text>
 							<AccordionIcon />
@@ -269,7 +273,7 @@ export default function Assignments() {
 								?.map((x: any, i: number) => {
 									return <AssessmentCard is_active={false} setExamSetUp={setExamSetUp} idx={id} key={i} {...x} data={x}/>;
 								})}
-							{data?.filter((x: any) => x?.is_marked === false && x?.is_active === false && x?.is_completed === false)?.length === 0 && <Text textAlign={"center"} fontSize={"2xl"} fontWeight={"bold"} textColor={"blue"}>No Drafts</Text>}
+							{data?.filter((x: any) => x?.is_marked === false && x?.is_active === false && x?.is_completed === false)?.length === 0 && <Text textAlign={"center"} fontSize={"lg"} fontWeight={"bold"} textColor={"blue"}>No Drafts</Text>}
 						</AccordionPanel>
 					</AccordionItem>
 				)}
@@ -281,7 +285,7 @@ export default function Assignments() {
 						color={"#343780"}
 						_expanded={{ bg: '#343680', color: 'white' }}
 					>
-						<Text fontWeight={"bold"} fontSize={"2xl"}>
+						<Text fontWeight={"bold"} fontSize={"lg"}>
 							Active
 						</Text>
 						<AccordionIcon />
@@ -292,7 +296,7 @@ export default function Assignments() {
 						.map((x: any, i: number) => {
 							return <AssessmentCard is_active={true} data={x} markMutation={markMutation} idx={id} key={i} setExamSetUp={setExamSetUp} {...x} />;
 						})}
-						{data?.filter((x: any) => x?.is_active)?.length === 0 && <Text textAlign={"center"} fontSize={"2xl"} fontWeight={"bold"} textColor={"blue"}>No Active Assessment</Text>}
+						{data?.filter((x: any) => x?.is_active)?.length === 0 && <Text textAlign={"center"} fontSize={"lg"} fontWeight={"bold"} textColor={"blue"}>No Active Assessment</Text>}
 					</AccordionPanel>
 				</AccordionItem>
 
@@ -303,7 +307,7 @@ export default function Assignments() {
 						color={"#343780"}
 						_expanded={{ bg: '#343680', color: 'white' }}
 					>
-					<Text fontWeight={"bold"} fontSize={"2xl"}>
+					<Text fontWeight={"bold"} fontSize={"lg"}>
 						Completed
 					</Text>
 					<AccordionIcon />
@@ -324,7 +328,7 @@ export default function Assignments() {
 								/>
 							);
 						})}
-					{data?.filter((x: any) => x?.is_completed && !x?.is_marked)?.length === 0 && <Text textAlign={"center"} fontSize={"2xl"} fontWeight={"bold"} textColor={"blue"}>No Completed Assessment</Text>}
+					{data?.filter((x: any) => x?.is_completed && !x?.is_marked)?.length === 0 && <Text textAlign={"center"} fontSize={"lg"} fontWeight={"bold"} textColor={"blue"}>No Completed Assessment</Text>}
 				</AccordionPanel>
 				</AccordionItem>
 
@@ -335,7 +339,7 @@ export default function Assignments() {
 						color={"#343780"}
 						_expanded={{ bg: '#343680', color: 'white' }}
 					>
-					<Text fontWeight={"bold"} fontSize={"2xl"}>
+					<Text fontWeight={"bold"} fontSize={"lg"}>
 						Marked
 					</Text>
 					<AccordionIcon />
@@ -356,7 +360,7 @@ export default function Assignments() {
 								/>
 							);
 						})}
-					{data?.filter((x: any) => x?.is_marked)?.length === 0 && <Text textAlign={"center"} fontSize={"2xl"} fontWeight={"bold"} textColor={"blue"}>No Marked Assessments</Text>}
+					{data?.filter((x: any) => x?.is_marked)?.length === 0 && <Text textAlign={"center"} fontSize={"lg"} fontWeight={"bold"} textColor={"blue"}>No Marked Assessments</Text>}
 				</AccordionPanel>
 				</AccordionItem>
 

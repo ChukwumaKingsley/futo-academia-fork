@@ -72,7 +72,7 @@ export default function CourseInstructors() {
 		<CourseTabs>
 			<Heading mt={5} fontSize={{base: "16", md: "20"}} textColor={"white"}bg={"#343680"} p={2}>Coordinators</Heading>
 			{
-				coordinatorLoading ? <Loader /> :
+				coordinatorLoading ? <Loader height={"100px"} /> :
 				coordinatorsList?.length >= 1 ?
 				<Flex flexDir={"column"}>
 					{coordinatorsList?.map((coordinator: any, index: number) => 
@@ -90,7 +90,7 @@ export default function CourseInstructors() {
 			}
 			<Heading mt={5} fontSize={{base: "16", md: "20"}} textColor={"white"}bg={"#343680"} p={2}>Instructors</Heading>
 			{
-				instructorLoading ? <Loader /> :
+				instructorLoading ? <Loader  height={"100px"} /> :
 				instructorsList?.length >= 1 ?
 				<Flex flexDir={"column"}>
 					{instructorsList?.map((instructor: any, index: number) => 
@@ -110,7 +110,7 @@ export default function CourseInstructors() {
 			}
 			{enrollment_status?.is_course_coordinator && <><Heading mt={5} fontSize={{base: "16", md: "20"}} textColor={"white"}bg={"#343680"} p={2}>Requests</Heading>
 			{
-				requestsLoading ? <Loader /> :
+				requestsLoading ? <Loader  height={"100px"} /> :
 				requestsList?.length >= 1 ?
 				<Flex flexDir={"column"}>
 					{requestsList?.map((instructor: any, index: number) => 
