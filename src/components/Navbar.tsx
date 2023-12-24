@@ -50,7 +50,7 @@ export default function Navbar({ bgColor }: NavbarProps) {
 				<Flex alignItems={"center"} columnGap={2}>
 					<Flex display={{ base: "flex", md: "none" }} columnGap={2}>
 						<Text as={NavLink} to={user?.is_instructor ? "/lecturer/home" : "/student/home"}>Home</Text>
-						<Text as={NavLink} to="/lecturer/my-courses">Courses</Text>
+						<Text as={NavLink} to={user?.is_instructor ? "/lecturer/my-courses" : "/student/my-courses"}>My Courses</Text>
 					</Flex>
 
 					<Box gridArea={"faculty"} display={{ base: "flex", md: "none" }}>

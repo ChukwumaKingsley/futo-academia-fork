@@ -57,15 +57,15 @@ const SidebarLecturer = () => {
 					</Link>
 				</ListItem>
 				<ListItem padding={"10px"} mb={4} style={activeItem === "courses" ? activeLinkStyle : {}}>
-					<Link href="/lecturer/my-courses" sx={{ textDecoration: "none" }}>
+					<Link href={user?.is_instructor ? "/lecturer/my-courses" : "/student/my-courses"} sx={{ textDecoration: "none" }}>
 						<Flex alignItems={"center"}>
 							<AutoStoriesOutlinedIcon sx={{ marginRight: "20px" }} />
-							Courses
+							My Courses
 						</Flex>
 					</Link>
 				</ListItem>
 				<ListItem padding={"10px"} mb={4} style={activeItem === "profile" ? activeLinkStyle : {}}>
-					<Link href="/lecturer-profile">
+					<Link href={user?.is_instructor ? "/lecturer-profile" : "/student-profile"}>
 						<Flex alignItems={"center"}>
 							<PersonOutlineOutlinedIcon sx={{ marginRight: "20px" }} />
 							Profile
