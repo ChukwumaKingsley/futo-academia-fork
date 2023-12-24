@@ -80,7 +80,7 @@ export function useUpdateCourse() {
 					semester,
 					level,
 				});
-				navigate(`/lecturer/courses/${course_code}`)
+				navigate(`/courses/${course_code}`)
 				return response
 			} catch (error: any) {
 				if (error?.response) {

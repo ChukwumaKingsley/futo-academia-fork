@@ -30,7 +30,6 @@ import EditCourse from "./pages/lecturer/EditCourse";
 import ViewAssessment from "./pages/ViewAssessment";
 import Assessments from "./pages/Assessments";
 import AddAssessment from "./pages/AddAssessment";
-import ViewCourseStudent from "./pages/ViewCourseStudent";
 import CourseStudents from "./pages/CourseStudents";
 import CourseInstructors from "./pages/CourseInstructors";
 import { AssessmentResults } from "./pages/AssessmentResults";
@@ -138,7 +137,6 @@ const router = createBrowserRouter(
 
 			{/* Student routes */}
 			<Route path="student/home/*" element={<StudentHome />} />
-			<Route path="student/courses/:id" element={<ViewCourseStudent />} />
 			<Route path="student/my-courses" element={<StudentCourses />}>
 				<Route index element={<FirstSemesterCourses />} />
 				<Route path="second-semester" element={<SecondSemesterCourses />} />
