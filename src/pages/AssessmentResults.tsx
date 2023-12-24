@@ -112,29 +112,29 @@ export const AssessmentResults = () => {
         {user?.is_instructor &&
         <>
             <Flex bgColor={"brand.500"}flexDir={"column"} mx={5} borderRadius={"50px"} p={3} my={10}>
-                <Flex  width={"100%"} justifyContent={"space-around"} alignContent={"center"} flexWrap={"wrap"} rowGap={5} columnGap={10} flexDir={"column"}>
-                    <Flex columnGap={3} p={1} fontSize={"2xl"} fontWeight={"bold"}>
+                <Flex  width={"100%"} justifyContent={"space-around"} alignContent={"center"} flexWrap={"wrap"} rowGap={0} columnGap={10} flexDir={"column"}>
+                    <Flex columnGap={3} p={1} fontWeight={"bold"}>
                         <Text textColor={"white"}>Average Test Time:</Text>
-                        <Text textAlign={"center"} textColor={"white"}> {assessmentResultsStats?.avg_time} minutes</Text>
+                        <Text textAlign={"center"} textColor={"white"}> {assessmentResultsStats?.avg_time} mins</Text>
                     </Flex>
-                    <Flex columnGap={3} p={1} fontSize={"2xl"} fontWeight={"bold"}>
-                        <Text textColor={"white"}>Average Score (%):</Text>
+                    <Flex columnGap={3} p={1}fontWeight={"bold"} justifyContent={"center"}>
+                        <Text textColor={"white"}>Average Score:</Text>
                         <Text textAlign={"center"} textColor={getColor(assessmentResultsStats?.avg_score_percentage)}> {assessmentResultsStats?.avg_score}/{assessmentResultsStats?.total_possible_score} ({assessmentResultsStats?.avg_score_percentage}%)</Text>
                     </Flex>
                     
                 </Flex>
                 <Flex width={"100%"} justifyContent={"space-around"} flexWrap={"wrap"} rowGap={5} columnGap={10}>
                     <Flex flexDir={"column"}>
-                        <Flex columnGap={3} p={1} fontSize={"2xl"} fontWeight={"bold"}>
+                        <Flex columnGap={3} p={1} fontWeight={"bold"}>
                             <Text textColor={"white"}>Highest Score:</Text>
                             <Text textAlign={"center"} textColor={getColor(assessmentResultsStats?.highest_score / assessmentResultsStats?.total_possible_score * 100)}> {assessmentResultsStats?.highest_score}/{assessmentResultsStats?.total_possible_score}</Text>
                         </Flex>
-                        <Flex columnGap={3} p={1} fontSize={"2xl"} fontWeight={"bold"}>
+                        <Flex columnGap={3} p={1} fontWeight={"bold"}>
                             <Text textColor={"white"}>Lowest Score:</Text>
                             <Text textAlign={"center"} textColor={getColor(assessmentResultsStats?.lowest_score / assessmentResultsStats?.total_possible_score * 100)}> {assessmentResultsStats?.lowest_score}/{assessmentResultsStats?.total_possible_score}</Text>
                         </Flex>
                     </Flex>
-                    <Flex columnGap={3} p={1} fontSize={"2xl"} fontWeight={"bold"} alignItems={"center"}>
+                    <Flex columnGap={3} p={1} fontWeight={"bold"} alignItems={"center"}>
                             <Text textColor={"white"}>No. of students:</Text>
                             <Text textAlign={"center"} textColor={getColor(assessmentResultsStats?.percentage_submissions)}> {assessmentResultsStats?.num_students} ({assessmentResultsStats?.percentage_submissions}%)</Text>
                         </Flex>

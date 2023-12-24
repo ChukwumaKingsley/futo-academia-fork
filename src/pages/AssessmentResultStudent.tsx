@@ -46,7 +46,7 @@ export const AssessmentResultsStudent = () => {
     <CourseTabs>
         <Box mt={10}>
         <>
-					<Text textAlign={"center"} fontSize={"2xl"}>
+					<Text textAlign={"center"} fontSize={"lg"}>
                         <b>
 						{data?.data?.title.toString().toUpperCase()}
                         </b>
@@ -88,19 +88,19 @@ export const AssessmentResultsStudent = () => {
                     <Avatar size={"2xl"} src={stats?.data?.photo_url} name={stats?.data?.name} />
                     <Text mt={1}>{stats?.data?.name} ({stats?.data?.reg_num})</Text>
                 </Flex>
-                <Flex justifyContent={"space-around"}>
+                <Flex justifyContent={"space-between"}>
                     <Flex flexDir={"column"} alignItems={"center"}>
-                        <Text textColor={"blue"}>START DATE/TIME</Text>
-                        <Text>{new Date(stats?.data?.start_datetime).toUTCString()}</Text>
+                        <Text textColor={"blue"} textAlign={"center"}>START DATE/TIME</Text>
+                        <Text textAlign={"center"}>{new Date(stats?.data?.start_datetime).toUTCString()}</Text>
                     </Flex>
                     <Flex flexDir={"column"} alignItems={"center"}>
-                        <Text textColor={"blue"}>SUBMISSION DATE/TIME</Text>
-                        <Text>{new Date(stats?.data?.start_datetime).toUTCString()}</Text>
+                        <Text textColor={"blue"} textAlign={"center"}>SUBMISSION DATE/TIME</Text>
+                        <Text textAlign={"center"}>{new Date(stats?.data?.start_datetime).toUTCString()}</Text>
                     </Flex>
 
                 </Flex>
 
-				<Box fontSize={"xl"} my={15} fontWeight={"black"} display={"flex"} justifyContent={"space-around"} flexWrap={"wrap"}>
+				<Box my={15} fontWeight={"black"} display={"flex"} justifyContent={"space-around"} flexWrap={"wrap"}>
                     <Flex columnGap={1}>
                         <Text textColor={"navy"}>
                             Score:
