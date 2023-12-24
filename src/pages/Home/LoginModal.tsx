@@ -25,12 +25,13 @@ export default function LoginModal({ isOpen, openSignUp, onClose }:{isOpen: bool
 
 							<Flex my={8} alignItems={"center"} rowGap={"0.5rem"} flexDirection={"column"} as="form">
 								<FormControl>
-									<FormLabel textTransform={"uppercase"}>username</FormLabel>
+									<FormLabel>Username(email)</FormLabel>
 									<Input
 										type="text"
 										id="username"
 										name="username"
 										autoComplete="name"
+										placeholder="username(email)"
 										required
 										onChange={(e) => {
 											setUser({
@@ -41,15 +42,19 @@ export default function LoginModal({ isOpen, openSignUp, onClose }:{isOpen: bool
 									/>
 								</FormControl>
 
-								<PasswordInput
-									name="password"
-									onChange={(e: any) => {
-										setUser({
-											...user,
-											password: e.target.value,
-										});
-									} } backgroundColor={"white"}
-								/>
+								<FormControl>
+								<FormLabel>Password</FormLabel>
+									<PasswordInput
+										name="password"
+										onChange={(e: any) => {
+											setUser({
+												...user,
+												password: e.target.value,
+											});
+										} } backgroundColor={"white"}
+									/>
+								</FormControl>
+
 
 								<Button my={6} w={"60%"} colorScheme="brand" isLoading={loginMutation.isLoading} onClick={() => loginMutation.mutate(user)} size={"lg"}>
 									Continue

@@ -33,7 +33,7 @@ function useLogin() {
 						isClosable: true,
 					  });
 				}
-				return error;
+				throw error;
 			}
 		},
 	});
