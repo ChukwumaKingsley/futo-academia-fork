@@ -312,7 +312,7 @@ const ObjectiveComponent = ({ dataId, answersMutation }: any) => {
 	return (
 		<Box>
 			<Text fontWeight={"bold"}>Options</Text>
-			<Flex alignItems="center" justifyContent="space-between" columnGap={2} flexDir={{base: "column", md: "row"}}>
+			<Flex alignItems="center" justifyContent="space-between" columnGap={2} flexDir={{base: "column", md: "row"}}  rowGap={{base: 3, md: 0}}>
 				<Box w="100%" display={"flex"} alignItems={"center"} gap={2}>
 					<Text fontWeight="bold">A.</Text>
 					<Input bgColor="white" name="A" onChange={(e) => setA(e?.target?.value)} />
@@ -322,7 +322,7 @@ const ObjectiveComponent = ({ dataId, answersMutation }: any) => {
 					<Input bgColor="white" name="B" onChange={(e) => setB(e?.target?.value)} />
 				</Box>
 			</Flex>
-			<Flex alignItems="center" justifyContent="space-between" mt={3} columnGap={2} flexDir={{base: "column", md: "row"}}>
+			<Flex alignItems="center" justifyContent="space-between" mt={3} columnGap={2} flexDir={{base: "column", md: "row"}} rowGap={{base: 3, md: 0}}>
 				<Box w="100%" display={"flex"} alignItems={"center"} gap={2}>
 					<Text fontWeight="bold">C.</Text>
 					<Input bgColor="white" name="C" onChange={(e) => setC(e?.target?.value)} />
