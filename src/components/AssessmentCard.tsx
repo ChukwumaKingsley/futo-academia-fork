@@ -159,9 +159,15 @@ export default function AssessmentCard({ is_active, title, id, idx, is_marked, i
 								{new Date(data?.start_date).toDateString()}, {new Date(data?.start_date).getHours()}:{zeroPad(new Date(data?.start_date).getMinutes())} - {new Date(data?.end_date).toDateString()}, {new Date(data?.end_date).getHours()}:{zeroPad(new Date(data?.end_date).getMinutes())}
 							</Text>
 							:
-							<Text color="#3578D3" fontSize={"sm"}>
+							is_active ? <Text color="#3578D3" fontSize={"sm"}>
 								Ongoing: ends {new Date(data?.end_date).toDateString()}, {new Date(data?.end_date).getHours()}:{zeroPad(new Date(data?.end_date).getMinutes())}
 							</Text>
+							:
+							<Flex color="#3578D3" fontSize={"sm"} flexDir={"column"}>
+								<Text>Overdue: set new assessment datetime</Text>
+								<Text textColor={"red"}>{new Date(data?.start_date).toDateString()}, {new Date(data?.start_date).getHours()}:{zeroPad(new Date(data?.start_date).getMinutes())} - {new Date(data?.end_date).toDateString()}, {new Date(data?.end_date).getHours()}:{zeroPad(new Date(data?.end_date).getMinutes())}</Text>
+								
+							</Flex>
 						}
 					</Box>
 	
