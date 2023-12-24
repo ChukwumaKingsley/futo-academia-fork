@@ -36,6 +36,11 @@ export default function CourseTabs({ children }: IProps) {
 
 	const location = useLocation();
 
+	const { data: enrolled, refetch: refetchEnrollmentStatus} = useQuery({
+		queryKey: ["getEnrollmentStatus", id],
+		queryFn: () => http.get(`/courses/${id}/enrollment_status`).then((r) => r.data),
+	});
+
 	const { data } = useQuery({
 		queryKey: ["getCourseID", id],
 		queryFn: () => http.get(`/courses/${id}`).then((r) => r.data),
@@ -51,10 +56,6 @@ export default function CourseTabs({ children }: IProps) {
 		queryFn: () => http.get(`/instructors/count/${id}`).then((r) => r.data),
 	});
 
-	const { data: enrolled, refetch: refetchEnrollmentStatus } = useQuery({
-		queryKey: ["getEnrollmentStatus", id],
-		queryFn: () => http.get(`/courses/${id}/enrollment_status`).then((r) => r.data),
-	});
 
 	const navigate = useNavigate();
 

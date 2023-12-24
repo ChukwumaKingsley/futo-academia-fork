@@ -20,6 +20,12 @@ export default function ViewCourse() {
 	
 	const [timer, setTimer] = useState(false)
 
+	const { data: enrolled, isLoading: statusLoading } = useQuery({
+		queryKey: ["getEnrollmentStatus", id],
+		queryFn: () => http.get(`/courses/${id}/enrollment_status`).then((r) => r.data),
+		enabled: !user?.isLoading
+	});
+
 	const { isLoading, refetch } = useQuery({
 		queryKey: ["getAssessments", id],
 		queryFn: () => http.get(`/courses/${id}/assessments`, {
@@ -32,6 +38,7 @@ export default function ViewCourse() {
 				
 				setModalsStates([...Array(activeAssessments.length).fill(false)]);
 		},
+		enabled: !statusLoading && (enrolled?.is_course_instructor || enrolled?.is_course_coordinator || enrolled?.is_enrolled)
 	});
 
 	const { data: courseResultsStats } = useQuery({
@@ -41,13 +48,13 @@ export default function ViewCourse() {
 			is_marked: true,
 			},
 		  },).then((r) => r.data),
-		  enabled: !user.isLoading && user.is_instructor,
+		  enabled: !user.isLoading && user.is_instructor && !statusLoading && (enrolled?.is_course_instructor || enrolled?.is_course_coordinator || enrolled?.is_enrolled)
 	});
 
 	const { data: myResults } = useQuery({
 		queryKey: ["my results", id],
 		queryFn: () => http.get(`/courses/results/${id}/${user?.id}`,).then((r) => r.data),
-		enabled: !user.isLoading && !user.is_instructor
+		enabled: !user.isLoading && !user.is_instructor && !statusLoading && (enrolled?.is_course_instructor || enrolled?.is_course_coordinator || enrolled?.is_enrolled)
 	});
 
 	const onOpen = (index: number) => {
