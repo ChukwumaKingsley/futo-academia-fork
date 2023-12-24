@@ -31,7 +31,6 @@ export default function LoginModal({ isOpen, openSignUp, onClose }:{isOpen: bool
 										id="username"
 										name="username"
 										autoComplete="name"
-										placeholder="username(email)"
 										required
 										onChange={(e) => {
 											setUser({

@@ -36,7 +36,7 @@ export default function Profile() {
 		event.preventDefault();
 		try {
 			uploadPhotoMutation.mutate({
-				id: formData.id,
+				id: user?.id,
 				file: image,
 			},{onSuccess: () => {
 				setSelectImage(prev=>!prev)

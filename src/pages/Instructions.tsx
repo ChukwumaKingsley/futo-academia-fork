@@ -111,7 +111,7 @@ export default function Instructions({idx}: {idx: string | undefined}) {
 										<FontAwesomeIcon color="#EEAEA0" icon={faTrash} onClick={() => handleInstructionDelete(object.id, index)} />
 									</Flex>
 								</ListItem>)}
-								<Button size="sm" colorScheme="blue" minWidth={"min-content"} onClick={handleInstructionUpload}>Save</Button>
+								<Button size="sm" colorScheme="blue" minWidth={"min-content"} onClick={handleInstructionUpload} isLoading={addInstructionsMutation.isLoading}>Save</Button>
 							</UnorderedList>
 						}
 					<Box width="100%" as="form" onSubmit={handleInstructionInput}>

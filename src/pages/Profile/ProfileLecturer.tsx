@@ -5,7 +5,7 @@ import { useUser } from "../../hooks/useUser";
 import { EditIcon } from "@chakra-ui/icons";
 import { useProfileUpdate, useUploadPhoto } from "../../hooks/useUserProfileUpdate";
 
-export default function ProfileStudent() {
+export default function ProfileLecturer() {
 	const fileInputRef = useRef(null);
 	const [edit, setEdit] = useState(false)
 	const [selectImage, setSelectImage] = useState(false)
@@ -16,6 +16,7 @@ export default function ProfileStudent() {
 	useEffect(() => {
 		setFormData(user);
 	}, [user.isLoading]);
+	console.log(formData)
 
 	const handleChange = (event: any) => {
 		const { name, value } = event.target;

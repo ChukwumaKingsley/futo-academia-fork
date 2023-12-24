@@ -245,7 +245,7 @@ export default function ObjectiveQuestion() {
 
 			<Center columnGap={3} mt={10}>
 				<Button variant={"outline"} colorScheme="blue" onClick={() => {navigate(`/courses/${id}/assessments`)}}minWidth={"min-content"}>Done</Button>
-				<Button variant={"solid"} colorScheme="blue" onClick={() => uploadMutation.mutate(idx)} minWidth={"min-content"}>Make Active</Button>
+				<Button variant={"solid"} colorScheme="blue" onClick={() => uploadMutation.mutate(idx)} isLoading={uploadMutation.isLoading} minWidth={"min-content"}>Make Active</Button>
 				<Button variant={"solid"} colorScheme="red" onClick={alertOnOpen} minWidth={"min-content"}>Delete assessment</Button>
 			</Center>
 
@@ -266,7 +266,7 @@ export default function ObjectiveQuestion() {
 							<Button ref={cancelRef} onClick={alertOnClose} size={"md"}>
 								Cancel
 							</Button>
-							<Button colorScheme="red" onClick={()=>{deleteAssessment.mutate({assessment_id: id})}} size={"md"}>
+							<Button colorScheme="red" onClick={()=>{deleteAssessment.mutate({assessment_id: id})}} size={"md"} isLoading={deleteAssessment.isLoading}>
 								Delete
 							</Button>
 						</AlertDialogFooter>

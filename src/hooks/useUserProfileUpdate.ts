@@ -7,6 +7,7 @@ export function useUploadPhoto() {
 	return useMutation({
 		mutationFn: async ({ id, file }: any) => {
 			try {
+				console.log(id, file)
 				const formData = new FormData();
 				formData.append('file', file);
 				const res = await http.put(`users/${id}/photo`, formData, {

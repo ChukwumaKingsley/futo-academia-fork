@@ -9,11 +9,11 @@ export default function LecturerProfile() {
 	const { pathname } = useLocation()
 
 	return (
-		<Box bg={"#F3F6FF"} minH="100vh">
+		<Box bgColor="#F3F6FF" h="max-content">
 			<Navbar bgColor="#F3F6FF" />
 			<Flex gap={"2vw"} paddingTop={"110px"}>
 				<SidebarLecturer />
-				<Box display={"flex"} flexDir={"column"} my={8} w="100%" p={"20px"}>
+				<Box display={"flex"} flexDir={"column"} my={8} w="100%" p={"20px"} overflowY={"auto"}>
 						<Center width={"70%"} maxWidth={"700px"}  minWidth={"300px"} alignSelf={"center"} height={"30px"} justifyContent={"space-around"} textAlign={"center"}>
 							<Heading 
 								as={NavLink} 
