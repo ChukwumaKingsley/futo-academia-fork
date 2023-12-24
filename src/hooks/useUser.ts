@@ -11,7 +11,7 @@ export const useUser = () => {
 		const { isLoading, data} = useQuery(["user_by_id"], () => http.get("/users"), {
 			enabled: true,
 			onError: (error: any) => {
-				if (error.response.status === 401) {
+				if (error.response.status === 401 || error.response.status === 404) {
 					localStorage.clear()
 					window.location.href = "/"
 				}

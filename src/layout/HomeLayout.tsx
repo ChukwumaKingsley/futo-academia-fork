@@ -2,12 +2,26 @@ import { Box, Button, Container, Flex, FormControl, FormLabel, Grid, Input, Text
 import Logo, { LogoWhite } from "../components/Logo";
 import LoginModal from "../pages/Home/LoginModal";
 import SignupModal from "../pages/Home/SignupModal";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 
 import { useState } from "react";
 import { WhatsAppIcon, TwitterIcon, LinkedInIcon, FacebookIcon } from "../components/Icons";
+import { useUser } from "../hooks/useUser";
 
 export default function HomeLayout({ children, height, styles }: { children: React.ReactNode; height?: string | number; styles?: React.CSSProperties }) {
+
+	const navigate = useNavigate()
+	const tokenCheck =  localStorage.getItem("token")
+
+	if (tokenCheck) {
+		const user = useUser()
+		if (user?.is_instructor) {
+			navigate('/lecturer/home')
+		} else if (!user?.is_instructor) {
+			navigate('/student/home')
+		}
+	}	
+
 	const [isOpenSignUp, setIsOpenSignUp] = useState(false)
 	const [isOpenLogin, setIsOpenLogin] = useState(false)
 
