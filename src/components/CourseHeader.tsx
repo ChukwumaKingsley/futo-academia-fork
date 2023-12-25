@@ -4,22 +4,27 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { NavLink } from "react-router-dom";
 import NoImage from "../assets/images/no-picture.jpg";
 import { useMakeEnrollRequest, useMakeEnrollRequestInstructor } from "../hooks/useEnrollments";
+import { useState } from "react";
 
 
 function CourseHeader({ course_code, title, description, units, course_photo_url, student_count, instructor_count, user, is_course_coordinator
 , is_course_instructor, enrollment_pending, is_enrolled, refetchEnrollmentStatus, instructor_enrollment_pending}: any) {
 
 	const reg_num = user?.id
+	const [request, setRequest] = useState(true)
 
 	const enrollRequestMutation = useMakeEnrollRequest()
 	const handleEnroll = () => {
 		enrollRequestMutation.mutate({course_code, reg_num},)
+		setRequest((prev: boolean) => !prev)
+		request
 			refetchEnrollmentStatus()
 	}
 
 	const joinRequestMutation = useMakeEnrollRequestInstructor()
 	const handleJoin = () => {
 		joinRequestMutation.mutate({course_code},)
+		setRequest((prev: boolean) => !prev)
 			refetchEnrollmentStatus()
 	}
 
