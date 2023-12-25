@@ -52,7 +52,7 @@ export default function Instructions({idx}: {idx: string | undefined}) {
 		refetchInstructions()
 	}
 
-	const handleInstructionDelete: any = (id: number | null, index: number) => {
+	const handleInstructionDelete: any = (id: string, index: number) => {
 		if (id) {
 			setInstructionsObject(instructionsObject.filter((instruction) => instruction.id !== id));
 			deleteInstruction.mutate(id)
@@ -83,11 +83,11 @@ export default function Instructions({idx}: {idx: string | undefined}) {
 			setInstructionsObject(newInstructionObject);
 			setInstructionEdit(false);
 			} else {
-				setInstructionsObject((prevList: InstructionObject[]) => [...prevList, {assessment_id: null, id: null, instruction: instruction.instruction}]); 
+				setInstructionsObject((prevList: InstructionObject[]) => [...prevList, {assessment_id: "", id: "", instruction: instruction.instruction}]); 
 			}
 			setInstruction({
-				assessment_id: null,
-				id: null,
+				assessment_id: "",
+				id: "",
 				instruction: ""
 			})
 	}
