@@ -44,7 +44,7 @@ export const CourseCard = ({ course }: any) => {
             name={coordinatorData?.name}
             src={coordinatorData?.photo_url}
             />
-            <Text fontSize={{base: "8px", md: "xs"}} textColor={"black"} bg={"blue.50"} px={"0.5"} borderRadius={"12px"}>{coordinatorData?.title} {coordinatorData?.name.slice(0, coordinatorData?.name.indexOf(" "))}</Text>
+            <Text fontSize={{base: "8px", md: "xs"}} textColor={"black"} bg={"blue.50"} px={"0.5"} borderRadius={"12px"}>{coordinatorData?.title} {coordinatorData?.name?.slice(0, coordinatorData?.name?.indexOf(" "))}</Text>
 
         </Flex>
       </Tooltip>
