@@ -14,10 +14,12 @@ export default function LecturerCourses() {
 			<Flex gap={"2vw"} paddingTop={"110px"}>
 				<SidebarLecturer />
 				<Box my={8}  w={"100%"}>
-					<Container w={"100%"} maxW={"73vw"} display={"flex"} flexDir={"column"}>
+					<Container w={"100%"} maxW={"100w"} display={"flex"} flexDir={"column"}>
 						<Flex my={8} justifyContent={"center"}>
 							<Button
 								width={"200px"}
+								size={"xs"}
+								fontSize={{base: "sm", md: "md"}}
 								variant={pathname === "/lecturer/my-courses" ? "solid" : "ghost"}
 								colorScheme="blue"
 								as={NavLink}
@@ -27,6 +29,8 @@ export default function LecturerCourses() {
 							</Button>
 							<Button
 								width={"200px"}
+								size={"xs"}
+								fontSize={{base: "sm", md: "md"}}
 								variant={pathname === "/lecturer/my-courses/second-semester" ? "solid" : "ghost"}
 								colorScheme="blue"
 								as={NavLink}

@@ -13,10 +13,12 @@ export default function StudentCourses() {
 			<Flex gap={"2vw"} paddingTop={"110px"}>
 				<SidebarStudent />
 				<Box my={8}  w={"100%"}>
-					<Container w={"100%"} maxW={"73vw"} display={"flex"} flexDir={"column"}>
+					<Container w={"100%"} maxW={"100vw"} display={"flex"} flexDir={"column"}>
 						<Flex my={8} justifyContent={"center"}>
 							<Button
 								width={"200px"}
+								size={"xs"}
+								fontSize={{base: "sm", md: "md"}}
 								variant={pathname === "/student/my-courses" ? "solid" : "ghost"}
 								colorScheme="blue"
 								as={NavLink}
@@ -26,6 +28,8 @@ export default function StudentCourses() {
 							</Button>
 							<Button
 								width={"200px"}
+								size={"xs"}
+								fontSize={{base: "sm", md: "md"}}
 								variant={pathname === "/student/my-courses/second-semester" ? "solid" : "ghost"}
 								colorScheme="blue"
 								as={NavLink}
