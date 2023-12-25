@@ -320,7 +320,7 @@ function ObjectiveAnswer({ question, answers, question_id, question_type, mark, 
 						<Input type="number" onChange={handleAnswering} />
 						):
 						question_type === "sub_obj" ? (
-							<Input type="number" onChange={handleAnswering} />
+							<Input type="text" onChange={handleAnswering} />
 					) : 
 						<Textarea onChange={handleAnswering} placeholder="Answer" />
 					}
