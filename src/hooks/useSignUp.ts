@@ -19,7 +19,7 @@ function useSignUp(openLogin: () => void) {
 			level
 		}: {
 			name: string;
-			id: number | null;
+			id: string;
 			title: string | null;
 			faculty: string;
 			department: string;

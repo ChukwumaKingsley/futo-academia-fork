@@ -44,7 +44,7 @@ export function useUpdateInstruction() {
 	const toast = useToast();
 	return useMutation({
 		mutationKey: ["updateInstruction"],
-		mutationFn: async ({ id, instruction }: {id: number | null, instruction: string}) => {
+		mutationFn: async ({ id, instruction }: {id: string, instruction: string}) => {
 			try {
 				const response = await http.put(`/instructions/${id}`, {instruction: instruction});
 				return response
@@ -63,7 +63,7 @@ export function useDeleteInstruction() {
 	const queryClient = useQueryClient();
 	return useMutation({
 		mutationKey: ["deleteInstruction"],
-		mutationFn: async (id: number | null) => {
+		mutationFn: async (id: string) => {
 			try {
 				const response = await http.delete(`/instructions/${id}`);
 				return response
