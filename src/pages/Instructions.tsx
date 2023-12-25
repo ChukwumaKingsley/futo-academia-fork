@@ -7,8 +7,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 export interface InstructionObject {
-	assessment_id: number | null;
-	id: number | null;
+	assessment_id: string;
+	id: string;
 	instruction: string;
   }
 
@@ -17,8 +17,8 @@ export default function Instructions({idx}: {idx: string | undefined}) {
 	//The lines of code below have to do with getting and updating instruction data
 	const [instructionsObject, setInstructionsObject] = useState<InstructionObject[]>([]);
 	const [instruction, setInstruction] = useState<InstructionObject>({
-		assessment_id: null,
-		id: null,
+		assessment_id: "",
+		id: "",
 		instruction: ""
 	})
 	const [instructionEdit, setInstructionEdit] = useState(false)
