@@ -316,7 +316,7 @@ function ObjectiveAnswer({ question, answers, question_id, question_type, mark, 
 							</RadioGroup>
 						</Stack>
 					): 
-					question_type === "math" ? (
+					question_type === "maths" ? (
 						<Input type="number" onChange={handleAnswering} />
 						):
 						question_type === "sub_obj" ? (
