@@ -5,9 +5,18 @@ import Navbar from "../../components/Navbar";
 import JoinCourse from "../../components/JoinCourse";
 import SidebarLecturer from "../../layout/SidebarLecturer";
 import AddCourse from "../../components/AddCourse";
+import { useUser } from "../../hooks/useUser";
+import { useEffect } from "react";
 
 export default function LecturerCourses() {
 	const { pathname } = useLocation()
+	const user = useUser()
+
+	useEffect(() => {
+		if (!user?.is_instructor) {
+		  window.location.href = "/student/my-courses/"
+	  }
+	  }, [user?.isLoading])
 	return (
 		<Box bg={"#F3F6FF"} minH={"100vh"}>
 			<Navbar bgColor="#F3F6FF" />

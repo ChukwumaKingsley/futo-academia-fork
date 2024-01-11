@@ -3,10 +3,20 @@ import { Flex, Box, Center, Heading } from "@chakra-ui/react";
 import Navbar from "../components/Navbar";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import SidebarStudent from "./SidebarStudent";
+import { useUser } from "../hooks/useUser";
+import { useEffect } from "react";
 
 export default function StudentProfile() {
 
 	const { pathname } = useLocation()
+	const user = useUser()
+
+	useEffect(() => {
+		if (user?.is_instructor) {
+			window.location.href = "/lecturer-profile/"
+		}
+
+	}, [user.isLoading]);
 
 	return (
 		<Box bg={"#F3F6FF"} minHeight="100vh">

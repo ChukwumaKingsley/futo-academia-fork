@@ -16,7 +16,6 @@ export default function ProfileLecturer() {
 	useEffect(() => {
 		setFormData(user);
 	}, [user.isLoading]);
-	console.log(formData)
 
 	const handleChange = (event: any) => {
 		const { name, value } = event.target;
