@@ -34,6 +34,7 @@ import CourseStudents from "./pages/CourseStudents";
 import CourseInstructors from "./pages/CourseInstructors";
 import { AssessmentResults } from "./pages/AssessmentResults";
 import { AssessmentResultsStudent } from "./pages/AssessmentResultStudent";
+import { NotFoundPage } from "./pages/NotFoundPage";
 
 const colors = {
 	brand: {
@@ -149,6 +150,7 @@ const router = createBrowserRouter(
 				<Route index element={<ProfileStudent />} />
 			  	<Route path="password" element={<Password />} />
 			</Route>
+			<Route path="*" element={<NotFoundPage />}/>
 		</Route>
 
 	)
