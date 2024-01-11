@@ -21,6 +21,11 @@ export interface SearchParams {
 export default function StudentHome() {
 
 	const user = useUser()
+	useEffect(() => {
+		if (user?.is_instructor) {
+		  window.location.href = "/lecturer/home/"
+	  }
+	  }, [user?.isLoading])
 	
 	const { pathname } = useLocation()
 	

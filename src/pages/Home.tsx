@@ -11,6 +11,11 @@ import { useState } from "react";
 
 export default function Home() {
 
+	const tokenCheck =  localStorage.getItem("token")
+	if (tokenCheck) {
+		window.location.href = "/student/home/"
+	}
+
 	const [isOpenSignUp, setIsOpenSignUp] = useState(false)
 	const [isOpenLogin, setIsOpenLogin] = useState(false)
 
